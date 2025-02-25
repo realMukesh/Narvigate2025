@@ -1,0 +1,258 @@
+{
+  "project_info": {
+    "project_number": "995839379754",
+    "firebase_url": "https://cto-talks-webapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "cto-talks-webapp",
+    "storage_bucket": "cto-talks-webapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:cc92e3645b09392ad3b653",
+        "android_client_info": {
+          "package_name": "com.brand.usa.in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:60f5d555632ffcc5d3b653",
+        "android_client_info": {
+          "package_name": "com.dreamcast.bni4m"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:af94e84d851672aad3b653",
+        "android_client_info": {
+          "package_name": "com.dreamcast.carrier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:11d6441e8c7a0857d3b653",
+        "android_client_info": {
+          "package_name": "com.dreamcast.carrieryatra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:9b6b755d7b2d507ad3b653",
+        "android_client_info": {
+          "package_name": "com.dreamcast.narvigate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:e871a3af0c71a8d8d3b653",
+        "android_client_info": {
+          "package_name": "com.event.allure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:ded934a58ebafdc4d3b653",
+        "android_client_info": {
+          "package_name": "com.event.fdf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:a6e63fae12d93478d3b653",
+        "android_client_info": {
+          "package_name": "com.event.gec"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:a56ce43e0b6c77f5d3b653",
+        "android_client_info": {
+          "package_name": "com.event.gps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:8e2cd9251206bb2ad3b653",
+        "android_client_info": {
+          "package_name": "com.event.hdfc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:a5cce764cfd7a596d3b653",
+        "android_client_info": {
+          "package_name": "com.event.pifaa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:4ed7b086860b767fd3b653",
+        "android_client_info": {
+          "package_name": "com.event.tataone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995839379754:android:d72ab384a1cab491d3b653",
+        "android_client_info": {
+          "package_name": "com.iimw.eventapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVs2ZSfVjXYKlc03VaWTQ5CVpvWTrjrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
