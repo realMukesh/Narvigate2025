@@ -3,6 +3,7 @@ import 'package:dreamcast/view/beforeLogin/globalController/authentication_manag
 import 'package:dreamcast/view/dashboard/dashboard_controller.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
 import 'package:dreamcast/view/menu/model/menu_data_model.dart';
+import 'package:dreamcast/view/representatives/controller/networkingController.dart';
 import 'package:dreamcast/view/representatives/view/networkingPage.dart';
 import 'package:dreamcast/view/startNetworking/view/dashboard/networkingDashboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -135,6 +136,7 @@ class HubController extends GetxController {
   }
 
   commonMenuRouting({required MenuData menuData}) {
+    print("sam ${menuData.slug}");
     if (_isButtonDisabled) return; // Prevent further clicks
     _isButtonDisabled = true;
     Future.delayed(const Duration(seconds: 2), () {
@@ -176,10 +178,17 @@ class HubController extends GetxController {
         Get.toNamed(FeedbackPage.routeName);
         break;
       case "my_badge":
-        Get.toNamed(QRDashboardPage.routeName);
+        // Get.toNamed(QRDashboardPage.routeName);
+        dashboardController.changeTabIndex(3);
         break;
       case "networking":
-        Get.to(NetworkingPage());
+        if (Get.isRegistered<NetworkingController>()) {
+          NetworkingController controller = Get.find();
+          controller.isLoading(false);
+          controller.clearFilterOnTab();
+          controller.initApiCall();
+        }
+        Get.toNamed(NetworkingPage.routeName);
         //dashboardController.changeTabIndex(3);
         break;
       case "exhibitors":
@@ -196,6 +205,12 @@ class HubController extends GetxController {
       case "speakers":
         Get.toNamed(
           SpeakerListPage.routeName,
+        );
+        break;
+      case "user":
+        Get.toNamed(
+          SpeakerListPage.routeName,
+          arguments: {"role": menuData.slug},
         );
         break;
       case "agenda":
@@ -248,6 +263,12 @@ class HubController extends GetxController {
         getHtmlPage(
             title: menuData.label ?? "",
             slug: menuData.slug ?? MyConstant.slugFloorMap,
+            isExternal: false);
+        break;
+      case "winners":
+        getHtmlPage(
+            title: menuData.label ?? "",
+            slug: menuData.slug ?? "winners",
             isExternal: false);
         break;
       case "photobooth":

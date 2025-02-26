@@ -404,7 +404,9 @@ class AppUrl {
 
   static String get mindmixer => 'https://staging-mindmixer.godreamcast.com/mm_saasboomi_2025/#/onboarding/login/by/token/Yx68HXlV61GBLOqAcjmNjUDZU53DNjQfSWNrdtoKZ1V6KvTnmqJ-4JpU7hXEYSU6';
 
+  static String get leaderBoardApi => '$baseURLV1/leaderboard/get';
 
+  static String get getBriefcases => '$baseURLV1/briefcases/search';
 
 }
 

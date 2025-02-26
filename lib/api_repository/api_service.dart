@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:dreamcast/model/guide_model.dart';
 import 'package:dreamcast/theme/ui_helper.dart';
@@ -10,6 +9,7 @@ import 'package:dreamcast/view/beforeLogin/signup/model/city_res_model.dart';
 import 'package:dreamcast/view/beforeLogin/signup/model/signup_category_model.dart';
 import 'package:dreamcast/view/beforeLogin/signup/model/state_res_model.dart';
 import 'package:dreamcast/view/eventFeed/model/postLikeModel.dart';
+import 'package:dreamcast/view/gallery/model/galleryModel.dart';
 import 'package:dreamcast/view/guide/model/dodont_model.dart';
 import 'package:dreamcast/view/menu/model/menu_data_model.dart';
 import 'package:dreamcast/view/menu/model/shiftingModel.dart';
@@ -400,6 +400,8 @@ class ApiService extends GetxService {
               .post(Uri.parse(AppUrl.commonBookmarkApi),
                   headers: getHeaders(), body: jsonEncode(body))
               .timeout(const Duration(seconds: 30));
+      debugPrint("somen ${jsonEncode(response.body)}");
+
       if (BookmarkCommonModel.fromJson(json.decode(response.body)).code ==
           440) {
         tokenExpire();
@@ -418,7 +420,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(AppUrl.getCommonDocument),
                   body: jsonEncode(jsonRequest), headers: getHeaders())
               .timeout(const Duration(seconds: 30));
-      log("common doc ${response.body}");
+      Logger.log("common doc ${response.body}");
       if (CommonDocumentModel.fromJson(json.decode(response.body)).code ==
           440) {
         tokenExpire();
@@ -438,7 +440,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(AppUrl.getCommonDocument),
                   body: jsonEncode(jsonRequest), headers: getHeaders())
               .timeout(const Duration(seconds: 30));
-      log("common doc ${response.body}");
+      Logger.log("common doc ${response.body}");
       if (ParentCommonDocumentModel.fromJson(json.decode(response.body)).code ==
           440) {
         tokenExpire();
@@ -452,6 +454,7 @@ class ApiService extends GetxService {
 
   ///get list of bookmark ids
   Future<BookmarkIdsModel> getBookmarkIds(dynamic body) async {
+    debugPrint("sam $body");
     try {
       final response =
           await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
@@ -1158,7 +1161,7 @@ class ApiService extends GetxService {
   /*start for speakers module*/
   Future<SpeakersModel> getSpeakersApi(dynamic body, dynamic apiUrl) async {
     debugPrint("speaker data-:${jsonEncode(body)}");
-    Logger.log("speaker data-:$apiUrl");
+    debugPrint("speaker data-:$apiUrl");
 
     try {
       final response =
@@ -1166,7 +1169,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(apiUrl),
                   headers: getHeaders(), body: jsonEncode(body))
               .timeout(const Duration(seconds: 30));
-      debugPrint("speaker data-:${response.body}");
+      debugPrint("speaker data somen -:${response.body}");
 
       if (SpeakersModel.fromJson(json.decode(response.body)).code == 440) {
         tokenExpire();
@@ -2414,6 +2417,24 @@ class ApiService extends GetxService {
     }
   }
 
+  /*used this for the common post method*/
+  Future<dynamic> dynamicPostRequest({dynamic body, url}) async {
+    try {
+      final response = await DigestAuthClient(
+          DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
+          .post(Uri.parse(url), headers: getHeaders(), body: jsonEncode(body))
+          .timeout(const Duration(seconds: 30));
+      print(response.body);
+      if (CommonModel.fromJson(json.decode(response.body)).code == 440) {
+        tokenExpire();
+      }
+      return response.body;
+    } catch (e) {
+      checkException(e);
+      rethrow;
+    }
+  }
+
   tokenExpire() {
     if (isDialogShow) {
       return;
@@ -2514,6 +2535,37 @@ class ApiService extends GetxService {
           data: decoder(<String, dynamic>{}),
           statusCode: 500,
           error: "Something went wrong, please try again.");
+    }
+  }
+
+  Future<GalleryModel> getGalleryList({required int page, required String type, String text = ""}) async {
+    try {
+      // Create the request payload
+      Map<String, dynamic> jsonRequest = {
+        "page": page,
+        "type": type,
+        "text": text,
+      };
+
+      print(jsonRequest);
+
+      final response = await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
+          .post(Uri.parse(AppUrl.getBriefcases), headers: getHeaders(), body: jsonEncode(jsonRequest))
+          .timeout(const Duration(seconds: 20));
+      print(response.body);
+
+      // Parse the response
+      GalleryModel galleryData = GalleryModel.fromJson(json.decode(response.body));
+
+      // Check if the token is expired
+      if (galleryData.code == 440) {
+        tokenExpire();
+      }
+
+      return galleryData;
+    } catch (e) {
+      checkException(e);
+      rethrow;
     }
   }
 }

@@ -738,14 +738,14 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
                         validator: (String? value) {
                           if (value == null ||
                               value.toString().trim().isEmpty) {
-                            Future.delayed(const Duration(seconds: 1), () {
+                            Future.delayed(const Duration(milliseconds: 500), () {
                               controller.notesData(NotesDataModel(text: value));
                             });
                             return "enter_notes".tr;
                           } else if (value.length < 3) {
                             return "notes_length_validation".tr;
                           } else {
-                            Future.delayed(const Duration(seconds: 1), () {
+                            Future.delayed(const Duration(milliseconds: 500), () {
                               controller.notesData(NotesDataModel(text: value));
                             });
                             return null;

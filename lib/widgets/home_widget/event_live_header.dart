@@ -1,6 +1,7 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
+import 'package:dreamcast/view/quiz/view/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -88,7 +89,7 @@ class LiveEventWidget extends GetView<HomeController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    toolbarWidget(ImageConstant.svg_chat, 0),
+                                    toolbarWidget(ImageConstant.feedback_launchpad, 0),
                                     toolbarWidget(
                                       _dashboardController.personalCount.value >
                                                   0 ||
@@ -186,7 +187,8 @@ class LiveEventWidget extends GetView<HomeController> {
           onTap: () {
             switch (index) {
               case 0:
-                Get.toNamed(ChatDashboardPage.routeName);
+                // Get.toNamed(ChatDashboardPage.routeName);
+                Get.toNamed(FeedbackPage.routeName);
                 break;
               case 1:
                 _dashboardController.openAlertPage();

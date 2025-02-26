@@ -2,6 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:dreamcast/routes/my_constant.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
+import 'package:dreamcast/view/quiz/view/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -256,7 +257,7 @@ class PreEventWidget extends GetView<HomeController> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           toolbarWidget(
-                                              ImageConstant.svg_chat, 0),
+                                              ImageConstant.feedback_launchpad, 0),
                                           SizedBox(
                                             width: 14.v,
                                           ),
@@ -347,7 +348,8 @@ class PreEventWidget extends GetView<HomeController> {
           onTap: () {
             switch (index) {
               case 0:
-                Get.toNamed(ChatDashboardPage.routeName);
+                // Get.toNamed(ChatDashboardPage.routeName);
+                Get.toNamed(FeedbackPage.routeName);
                 break;
               case 1:
                 _dashboardController.openAlertPage();

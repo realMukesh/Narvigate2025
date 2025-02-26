@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:auto_size_text/auto_size_text.dart';

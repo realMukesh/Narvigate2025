@@ -62,6 +62,9 @@ class SpeakerNetworkController extends GetxController
     // Add the controller as a WidgetsBinding observer
     WidgetsBinding.instance.addObserver(this);
     super.onInit();
+    if(Get.arguments != null){
+      role = Get.arguments["role"];
+    }
     _authenticationManager = Get.find();
     userDetailController = Get.put(SpeakersDetailController());
     _pageNumber = 1;

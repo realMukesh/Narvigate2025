@@ -54,7 +54,9 @@ class GlobalSearchController extends GetxController {
             sort: "",
             notes: false,
             params: {}));
-    getSearchExhibitorsApi(isRefresh: false);
+    // getSearchExhibitorsApi(isRefresh: false);
+
+    getSearchSessionApi(isRefresh: false);
   }
 
   ///search load user list
@@ -130,6 +132,7 @@ class GlobalSearchController extends GetxController {
       RepresentativeModel? model = await apiService.getUserList(
           networkRequestModel, "${AppUrl.usersListApi}/search");
       isFirstLoadRunning(false);
+
       if (model.status! && model.code == 200) {
         speakerList.clear();
         if (model.body?.representatives != null &&

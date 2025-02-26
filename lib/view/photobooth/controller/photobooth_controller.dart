@@ -24,6 +24,7 @@ class PhotoBoothController extends GetxController {
   var loading = false.obs;
   final ImagePicker _picker = ImagePicker();
   var photoList = [].obs;
+  var videoList = [].obs;
   var totalPhotos = 0.obs;
   late bool hasNextPage;
   int pageNumber = 0;
@@ -46,12 +47,13 @@ class PhotoBoothController extends GetxController {
   var isAiSearchVisible = true.obs;
 
   ScrollController scrollController = ScrollController();
+  ScrollController scrollVideoController = ScrollController();
   @override
   void onInit() {
     super.onInit();
     _authManager = Get.find();
     user_id = _authManager.getUserId() ?? "";
-    getAllPhotos(body: {"page": "1"}, isRefresh: false);
+    getAllPhotos(body: {"page": "1","type":"image"}, isRefresh: false);
     getAvailableCameras();
   }
 
@@ -122,6 +124,89 @@ class PhotoBoothController extends GetxController {
     });
   }
 
+  ///load video first time
+  Future<void> getAllVideo({required dynamic body, required isRefresh}) async {
+    try {
+      if (!isRefresh) {
+        isFirstLoadRunning(true);
+      }
+      PhotoListModel? model = await apiService.getAiPhotoList(body);
+      isFirstLoadRunning(false);
+      if (model.status! && model.code == 200) {
+        isMyPhotos(false);
+        uploadPhotoEnable(
+            model.body?.actionUploadEnable.toString() == "1" ? true : false);
+        totalPhotos.value = model.body?.total ?? 0;
+        videoList.clear();
+
+        hasNextPage = model.body!.hasNextPage!;
+        pageNumber = 2;
+        videoList.addAll(model.body!.gallery!);
+        _loadMoreVideo();
+        update();
+        isFirstLoadRunning(false);
+      } else {
+        isFirstLoadRunning(false);
+        update();
+      }
+    } catch (e) {
+      isFirstLoadRunning(false);
+    } finally {
+      isFirstLoadRunning(false);
+    }
+  }
+
+  ///add pagination for _loadMorePhotos
+  Future<void> _loadMoreVideo() async {
+    scrollVideoController.addListener(() async {
+      if (scrollVideoController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        isAiSearchVisible(false);
+      }
+      if (scrollVideoController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        isAiSearchVisible(true);
+      }
+
+      if (hasNextPage == true &&
+          isFirstLoadRunning.value == false &&
+          isLoadMoreRunning.value == false &&
+          scrollVideoController.position.maxScrollExtent ==
+              scrollVideoController.position.pixels) {
+        isLoadMoreRunning(true);
+        try {
+          PhotoListModel? model =
+          await apiService.getAiPhotoList({
+            "page": pageNumber,
+            "type": "video",
+          });
+          if (model.status! && model.code == 200) {
+            hasNextPage = model.body!.hasNextPage!;
+            pageNumber = pageNumber + 1;
+            videoList.addAll(model.body!.gallery!);
+            update();
+          }
+        } catch (e) {
+          print(e.toString());
+        }
+        isLoadMoreRunning(false);
+      }
+    });
+  }
+
+  void onTabChanged(int index) {
+    // tabIndex.value = index;
+    if (index == 0) {
+      // If on the Images tab, fetch images
+      getAllPhotos(
+          body: {"page": 1,"type":"image"}, isRefresh: false);
+    } else if (index == 1) {
+      // If on the Videos tab, fetch videos
+      getAllVideo(
+          body: {"page": 1, "type": "video"}, isRefresh: false);
+    }
+  }
+
   ///search the image by image.
   Future<void> searchAiImage({
     BuildContext? context,
@@ -158,7 +243,7 @@ class PhotoBoothController extends GetxController {
     CommonModel? loginResponseModel =
         await apiService.uploadImage(userId, imageFile.path.toString());
     loading(false);
-    getAllPhotos(body: {"page": "1"}, isRefresh: true);
+    getAllPhotos(body: {"page": "1", "type":"image"}, isRefresh: true);
   }
 
   getAvailableCameras() async {

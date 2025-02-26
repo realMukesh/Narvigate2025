@@ -15,7 +15,7 @@ import '../../../widgets/custom_search_view.dart';
 
 class GlobalSearchPage extends GetView<GlobalSearchController> {
   GlobalSearchPage({super.key});
-  var searchTagList = ["Exhibitors", "Networking", "Sessions", "Speakers"];
+  var searchTagList = ["Sessions", "Speakers"];
   static const routeName = "/globalSearchPage";
 
   final globalController = Get.put(GlobalSearchController());
@@ -84,16 +84,16 @@ class GlobalSearchPage extends GetView<GlobalSearchController> {
                   body: TabBarView(
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
+                      // controller.selectedSearchIndex.value == 0
+                      //     ? SearchExhibitorPage()
+                      //     : const SizedBox(),
+                      // controller.selectedSearchIndex.value == 1
+                      //     ? SearchUserPage()
+                      //     : const SizedBox(),
                       controller.selectedSearchIndex.value == 0
-                          ? SearchExhibitorPage()
-                          : const SizedBox(),
-                      controller.selectedSearchIndex.value == 1
-                          ? SearchUserPage()
-                          : const SizedBox(),
-                      controller.selectedSearchIndex.value == 2
                           ? SearchSessionPage()
                           : const SizedBox(),
-                      controller.selectedSearchIndex.value == 3
+                      controller.selectedSearchIndex.value == 1
                           ? SearchSpeakerPage()
                           : const SizedBox(),
                     ],
@@ -138,23 +138,23 @@ class GlobalSearchPage extends GetView<GlobalSearchController> {
 
   tabIndexAndSearch(bool isRefresh) {
     switch (controller.selectedSearchTag.value) {
-      case "Exhibitors":
-        controller.getSearchExhibitorsApi(isRefresh: isRefresh);
-        controller.selectedSearchIndex(0);
-        break;
-      case "Networking":
-        controller.networkRequestModel.filters?.text =
-            controller.textController.value.text.trim() ?? "";
-        controller.getSearchUserApi(isRefresh: isRefresh);
-        controller.selectedSearchIndex(1);
-        break;
+      // case "Exhibitors":
+      //   controller.getSearchExhibitorsApi(isRefresh: isRefresh);
+      //   controller.selectedSearchIndex(0);
+      //   break;
+      // case "Networking":
+      //   controller.networkRequestModel.filters?.text =
+      //       controller.textController.value.text.trim() ?? "";
+      //   controller.getSearchUserApi(isRefresh: isRefresh);
+      //   controller.selectedSearchIndex(1);
+      //   break;
       case "Sessions":
-        controller.selectedSearchIndex(2);
+        controller.selectedSearchIndex(0);
         controller.getSearchSessionApi(isRefresh: isRefresh);
 
         break;
       case "Speakers":
-        controller.selectedSearchIndex(3);
+        controller.selectedSearchIndex(1);
         controller.networkRequestModel.filters?.text =
             controller.textController.value.text.trim() ?? "";
         controller.getSearchSpeakerApi(isRefresh: isRefresh);

@@ -93,7 +93,7 @@ class DashboardPage extends StatelessWidget {
                   color: colorSecondary,
                 ),
                 actions: [
-                  buildChatLink(),
+                  // buildChatLink(),
                   buildAlertLink(),
                   const SizedBox(
                     width: 3,
@@ -109,7 +109,7 @@ class DashboardPage extends StatelessWidget {
                       HomePage(),
                       SessionDashboardPage(),
                       HubMenuPage(),
-                      QRDashboardPage(),
+                      const QRDashboardPage(),
                       //NetworkingPage(),
                       AccountPage()
                     ],
@@ -169,7 +169,7 @@ class DashboardPage extends StatelessWidget {
                         AssetImage(ImageConstant.ic_badge),
                         size: 25,
                       ),
-                      label: "networking".tr,
+                      label: "myBadge".tr,
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(

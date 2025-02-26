@@ -120,48 +120,44 @@ class MyContactListPage extends GetView<ContactController> {
             onTap: () {
               showPopup(!showPopup.value);
             },
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 170.adaptSize),
-              child: Container(
-                width: context.width,
-                padding: EdgeInsets.only(
-                    left: 11.adaptSize,
-                    right: 11.adaptSize,
-                    top: 7.adaptSize,
-                    bottom: 7.adaptSize),
-                decoration: BoxDecoration(
-                    border: Border.all(color: indicatorColor, width: 1),
-                    color: white,
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      ImageConstant.ic_sort,
-                      width: 11,
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Flexible(child: CustomTextView(
-                      text:
-                      controller.filterContactBody.value.selectedItem !=
-                                      null &&
-                                  controller.filterContactBody.value.selectedItem
-                                      .toString()
-                                      .isNotEmpty
-                              ? controller
-                                  .filterContactBody.value.selectedItem
-                                  .toString()
-                              : controller.filterContactBody.value.label ??
-                                  "Loading",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,maxLines: 1,
-                      textOverflow: TextOverflow.ellipsis,
-                    ))
-                  ],
-                ),
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 11.adaptSize,
+                  right: 11.adaptSize,
+                  top: 7.adaptSize,
+                  bottom: 7.adaptSize),
+              decoration: BoxDecoration(
+                  border: Border.all(color: indicatorColor, width: 1),
+                  color: white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    ImageConstant.ic_sort,
+                    width: 11,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  Flexible(child: CustomTextView(
+                    text:
+                    controller.filterContactBody.value.selectedItem !=
+                                    null &&
+                                controller.filterContactBody.value.selectedItem
+                                    .toString()
+                                    .isNotEmpty
+                            ? controller
+                                .filterContactBody.value.selectedItem
+                                .toString()
+                            : controller.filterContactBody.value.label ??
+                                "Loading",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,maxLines: 1,
+                    textOverflow: TextOverflow.ellipsis,
+                  ))
+                ],
               ),
             ),
           ),
@@ -176,38 +172,34 @@ class MyContactListPage extends GetView<ContactController> {
                 controller.generateCsvFile();
               }
             },
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 90.adaptSize),
-              child: Container(
-                width: context.width,
-                padding: EdgeInsets.only(
-                    left: 11.adaptSize,
-                    right: 11.adaptSize,
-                    top: 7.adaptSize,
-                    bottom: 7.adaptSize),
-                decoration: BoxDecoration(
-                    border: Border.all(color: indicatorColor, width: 1),
-                    color: white,
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      ImageConstant.export_icon,
-                      width: 11,
-                      color: colorSecondary,
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    const CustomTextView(
-                      text: "Export",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,color: colorSecondary,
-                    )
-                  ],
-                ),
+            child: Container(
+              padding: EdgeInsets.only(
+                  left: 11.adaptSize,
+                  right: 11.adaptSize,
+                  top: 7.adaptSize,
+                  bottom: 7.adaptSize),
+              decoration: BoxDecoration(
+                  border: Border.all(color: indicatorColor, width: 1),
+                  color: white,
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    ImageConstant.export_icon,
+                    width: 11,
+                    color: colorSecondary,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  const CustomTextView(
+                    text: "Export",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,color: colorSecondary,
+                  )
+                ],
               ),
             ),
           )

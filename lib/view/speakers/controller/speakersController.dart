@@ -71,6 +71,9 @@ class SpeakersDetailController extends GetxController {
   @override
   void onInit() {
     _authenticationManager = Get.find();
+    if(Get.arguments != null){
+      role = Get.arguments["role"];
+    }
     super.onInit();
   }
 
@@ -106,7 +109,7 @@ class SpeakersDetailController extends GetxController {
         isBlocked(
             userDetailBody.value.isBlocked.toString() == "1" ? true : false);
 
-        pageTitle("${role.toString().capitalize} Profile");
+        pageTitle("${role.toString().toLowerCase() == MyConstant.attendee ? "performer".tr : role.toString().capitalize} Profile");
         Get.toNamed(SpeakersDetailPage.routeName);
         commonChatMeetingController.getChatRequestStatus(
             isShow: false, receiverId: userDetailBody.value.id ?? "");
@@ -188,7 +191,8 @@ class SpeakersDetailController extends GetxController {
     isFavLoading(true);
     var model = await _documentController.bookmarkToItem(
         requestBody:
-            BookmarkRequestModel(itemType: MyConstant.speakers, itemId: id));
+            BookmarkRequestModel(itemType: role, itemId: id));
+            // BookmarkRequestModel(itemType: MyConstant.speakers, itemId: id));
     isFavLoading(false);
     if (model["status"]) {
       bookMarkIdsList.add(id);

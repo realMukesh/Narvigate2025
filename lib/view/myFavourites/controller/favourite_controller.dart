@@ -1,4 +1,5 @@
 import 'package:dreamcast/view/myFavourites/controller/favourite_boot_controller.dart';
+import 'package:dreamcast/view/myFavourites/controller/favourite_performer_controller.dart';
 import 'package:dreamcast/view/myFavourites/controller/favourite_session_controller.dart';
 import 'package:dreamcast/view/myFavourites/controller/favourite_speaker_controller.dart';
 import 'package:dreamcast/view/myFavourites/controller/favourite_user_controller.dart';
@@ -37,25 +38,28 @@ class FavouriteController extends GetxController {
     Get.lazyPut(() => FavUserController(), fenix: true);
     Get.lazyPut(() => FavSessionController(), fenix: true);
     Get.lazyPut(() => FavSpeakerController(), fenix: true);
+    Get.lazyPut(() => FavPerformerController(), fenix: true);
     Get.lazyPut(() => FavBootController(), fenix: true);
     Get.lazyPut(() => SessionController(), fenix: true);
   }
 
   Future<void> createTab() async {
     tabList.clear();
-    tabList.add("attendee".tr);
-    tabList.add("allSession".tr);
+    // tabList.add("attendee".tr);
     tabList.add("speakers".tr);
-    tabList.add("exhibitors".tr);
+    tabList.add("allSession".tr);
+    tabList.add("performers".tr);
+    // tabList.add("exhibitors".tr);
   }
 
   tabIndexAndSearch(bool isRefresh) {
     switch (tabIndex.value) {
       case 0:
-        if (Get.isRegistered<FavUserController>()) {
-          FavUserController controller = Get.find();
+        if (Get.isRegistered<FavSpeakerController>()) {
+          FavSpeakerController controller = Get.find();
           controller.getApiData();
         }
+
         break;
       case 1:
         if (Get.isRegistered<FavSessionController>()) {
@@ -64,10 +68,15 @@ class FavouriteController extends GetxController {
         }
         break;
       case 2:
-        if (Get.isRegistered<FavSpeakerController>()) {
-          FavSpeakerController controller = Get.find();
+        if (Get.isRegistered<FavPerformerController>()) {
+          FavPerformerController controller = Get.find();
           controller.getApiData();
         }
+
+      // if (Get.isRegistered<FavUserController>()) {
+      //   FavUserController controller = Get.find();
+      //   controller.getApiData();
+      // }
 
         break;
       case 3:

@@ -390,6 +390,8 @@ final Map<String, String> enUs = {
   "bookSeats": "Book Seat",
   "explore_more":"Explore More",
   "speakers": "Speakers",
+  "performer": "Performer",
+  "performers": "Performers",
   "contacts": "Contacts",
   "enter_your_detail":"Enter your detail",
 
@@ -431,7 +433,7 @@ final Map<String, String> enUs = {
   "appointment": "Appointments",
   "notification": "Notifications",
   "gallery": "Gallery",
-  "ai_gallery": "AI Gallery",
+  "ai_gallery": "Event Gallery",
   "image": "Image",
   "video": "Video",
 

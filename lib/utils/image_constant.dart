@@ -246,6 +246,7 @@ class ImageConstant {
 
   static String ic_polls = "assets/svg/ic_polls.svg";
   static String menu_feedback = "assets/svg/menu_feedback.svg";
+  static String feedback_launchpad = "assets/svg/feedback_launchpad.svg";
   static String sucess_icon = "assets/images/sucess_icon.png";
   static String ic_index_bar_bubble_gray = "assets/images/ic_index_bar_bubble_gray.png";
   static String ai_photo_search = "assets/icons/ai_photo_search.png";

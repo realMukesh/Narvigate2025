@@ -3,6 +3,7 @@ import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/dashboard/dashboard_controller.dart';
 import 'package:dreamcast/view/myFavourites/controller/favourite_controller.dart';
 import 'package:dreamcast/view/myFavourites/view/favourite_exhibitors_page.dart';
+import 'package:dreamcast/view/myFavourites/view/favourite_performer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dreamcast/theme/app_colors.dart';
@@ -63,10 +64,10 @@ class BookmarkDashboard extends GetView<FavouriteController> {
                   indicatorColor: Colors.transparent,
                   tabAlignment: TabAlignment.start,
                   unselectedLabelStyle:
-                  GoogleFonts.getFont(MyConstant.currentFont,fontSize: 24.fSize,
+                  GoogleFonts.getFont(MyConstant.currentFont,fontSize: 22.fSize,
                       fontWeight: FontWeight.w600,
                       color: colorGray),
-                  labelStyle:GoogleFonts.getFont(MyConstant.currentFont,fontSize: 24.fSize,
+                  labelStyle:GoogleFonts.getFont(MyConstant.currentFont,fontSize: 22.fSize,
                       fontWeight: FontWeight.w600,
                       color: colorPrimary),
                   onTap: (index) {
@@ -88,12 +89,13 @@ class BookmarkDashboard extends GetView<FavouriteController> {
                       child: TabBarView(
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          FavouriteAttendeePage(),
+                          FavouriteSpeakerPage(),
                           FavouriteSessionPage(
                             isFromBookmarkSection: true,
                           ),
-                          FavouriteSpeakerPage(),
-                          FavouriteExhibitorsPage(),
+                          FavouritePerformerPage(),
+                          // FavouriteAttendeePage(),
+                          // FavouriteExhibitorsPage(),
                         ],
                       ),
                     ),

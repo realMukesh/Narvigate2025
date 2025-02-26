@@ -1,21 +1,30 @@
-import 'package:dreamcast/theme/app_colors.dart';
-import 'package:dreamcast/utils/image_constant.dart';
 import 'package:dreamcast/utils/size_utils.dart';
-import 'package:dreamcast/view/leaderboard/view/criteria_page.dart';
-import 'package:dreamcast/view/leaderboard/view/leaderboard_page.dart';
-import 'package:dreamcast/view/leaderboard/view/my_points_page.dart';
-import 'package:dreamcast/widgets/app_bar/appbar_leading_image.dart';
-import 'package:dreamcast/widgets/app_bar/custom_app_bar.dart';
-import 'package:dreamcast/widgets/toolbarTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get/get_core/src/get_main.dart';
+import '../../../theme/app_colors.dart';
+import '../../../utils/image_constant.dart';
+import '../../../widgets/app_bar/appbar_leading_image.dart';
+import '../../../widgets/app_bar/custom_app_bar.dart';
+import '../../../widgets/toolbarTitle.dart';
 import '../controller/leaderboard_controller.dart';
+import 'my_criterias_page.dart';
+import 'my_points_page.dart';
+import 'my_rankings_page.dart';
 
-class LeaderboardDashboardPage extends GetView<LeaderboardController> {
-  static String routeName = '/LeaderboardPage';
+class LeaderboardDashboardPage extends StatefulWidget {
+  const LeaderboardDashboardPage({Key? key}) : super(key: key);
+  static const routeName = "/LeaderBoardPage";
 
-  const LeaderboardDashboardPage({super.key});
+  @override
+  State<LeaderboardDashboardPage> createState() => _LeaderboardDashboardPage();
+}
+
+class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
+    with SingleTickerProviderStateMixin {
+  var tabList = ["Leaderboard", "Criteria", "My Points"];
+  final LeaderboardController leaderboardController = Get.find();
+  int tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +44,19 @@ class LeaderboardDashboardPage extends GetView<LeaderboardController> {
             Get.back();
           },
         ),
-        title: ToolbarTitle(title: "leaderboard".tr),
+        title: ToolbarTitle(title: "Leaderboard".tr),
       ),
       body: DefaultTabController(
-        length: controller.tabList.length,
+        length: tabList.length,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: white,
           appBar: TabBar(
             dividerColor: Colors.transparent,
             isScrollable: true,
             labelColor: colorSecondary,
             indicatorColor: Colors.transparent,
             tabAlignment: TabAlignment.center,
+            indicatorSize: TabBarIndicatorSize.tab,
             unselectedLabelStyle: TextStyle(
                 fontSize: 22.fSize,
                 fontWeight: FontWeight.w600,
@@ -56,42 +66,43 @@ class LeaderboardDashboardPage extends GetView<LeaderboardController> {
                 fontWeight: FontWeight.w600,
                 color: colorSecondary),
             onTap: (index) {
-              controller.selectedTabIndex(index);
-              // switch (index) {
-              //   case 1:
-              //     _faqController.getUserGuide(isRefresh: false);
-              //     break;
-              //   case 2:
-              //     _faqController.getTips(isRefresh: false);
-              //     break;
-              // }
+              leaderboardController.tabController.index = index;
+              leaderboardController.selectedTabIndex(index);
+              leaderboardController.getLeaderboard(isRefresh: true);
             },
             tabs: <Widget>[
               ...List.generate(
-                controller.tabList.length,
-                (index) => Obx(() => Tab(
-                      child: Text(
-                        controller.tabList[index],
-                        style: TextStyle(
-                            color: controller.selectedTabIndex.value == index
-                                ? colorPrimary
-                                : colorGray),
+                tabList.length,
+                (index) => Obx(
+                  () => Tab(
+                    child: Text(
+                      tabList[index],
+                      style: TextStyle(
+                          color: leaderboardController.selectedTabIndex.value ==
+                                  index
+                              ? colorPrimary
+                              : colorGray,
                       ),
-                      // All Sessions
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-          body: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                LeaderboardPage(),
-                CriteriaPage(),
-                MyPointsPage(),
-              ],
-            ),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                  child: TabBarView(
+                controller: leaderboardController.tabController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  const MyRankingPage(),
+                  CriteriasPage(),
+                  MyPointsPage(),
+                ],
+              ))
+            ],
           ),
         ),
       ),

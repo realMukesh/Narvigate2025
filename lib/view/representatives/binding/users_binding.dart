@@ -1,3 +1,4 @@
+import 'package:dreamcast/view/representatives/controller/networkingController.dart';
 import 'package:dreamcast/view/representatives/controller/user_detail_controller.dart';
 import 'package:get/get.dart';
 /// A binding class for the SpeakerScreen.
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 class UsersBinding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut(() => NetworkingController(),fenix: true);
     Get.lazyPut(() => UserDetailController(),fenix: true);
   }
 }

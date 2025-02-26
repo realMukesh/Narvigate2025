@@ -281,10 +281,10 @@ class AppPages {
         name: NotesDashboard.routeName,
         page: () => NotesDashboard(),
         binding: UserNotesBinding()),
-    // GetPage(
-    //     name: NetworkingPage.routeName,
-    //     page: () => NetworkingPage(),
-    //     binding: UsersBinding()),
+    GetPage(
+        name: NetworkingPage.routeName,
+        page: () => NetworkingPage(),
+        binding: UsersBinding()),
     GetPage(
       name: BriefcasePage.routeName,
       page: () => BriefcasePage(),

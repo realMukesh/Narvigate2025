@@ -36,7 +36,7 @@ class NetworkingController extends GetxController with WidgetsBindingObserver {
   var userFilterBody = UserBodyFilter().obs;
   var tempFilterBody = UserBodyFilter().obs;
   var isFilterApply = false.obs;
-  var role = MyConstant.entertainment;
+  var role = MyConstant.attendee;
   //extra field.
   var selectedSort = "ASC".obs;
   TextEditingController searchController = TextEditingController();
@@ -79,6 +79,7 @@ class NetworkingController extends GetxController with WidgetsBindingObserver {
             notes: false,
             params: {}));
     hasNextPage = false;
+    initApiCall();
   }
 
   @override

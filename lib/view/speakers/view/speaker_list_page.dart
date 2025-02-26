@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dreamcast/theme/app_colors.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/speakers/controller/speakerNetworkController.dart';
@@ -31,7 +33,7 @@ import '../widget/feature_speaker_widget.dart';
 class SpeakerListPage extends GetView<SpeakerNetworkController> {
   SpeakerListPage({super.key});
   static const routeName = "/SpeakerNetworkPage";
-  String role = MyConstant.speakers;
+  // String role = MyConstant.speakers;
 
   SpeakerNetworkController speakerNetworkController =
       Get.put(SpeakerNetworkController());
@@ -53,7 +55,7 @@ class SpeakerListPage extends GetView<SpeakerNetworkController> {
             Get.back();
           },
         ),
-        title: ToolbarTitle(title: "speakers".tr),
+        title: ToolbarTitle(title: controller.role == MyConstant.speakers ? "speakers".tr : "entertainment".tr),
       ),
       body: silverBodyWidget(context),
     );
@@ -186,7 +188,9 @@ class SpeakerListPage extends GetView<SpeakerNetworkController> {
   Widget buildChildMenuBody(SpeakersData representatives) {
     return Padding(
       padding: const EdgeInsets.only(left: 14, right: 25),
-      child: GestureDetector(
+      child: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () async {
           controller.isLoading(true);
           await controller.userDetailController.getSpeakerDetail(
@@ -239,7 +243,7 @@ class SpeakerListPage extends GetView<SpeakerNetworkController> {
           }
           controller.clearFilterIfNotApply();
           var result = await Get.to(SpeakerFilterDialog(
-            role: role,
+            role: controller.role,
           ));
           if (result != null) {
             refreshApiData(isRefresh: false);

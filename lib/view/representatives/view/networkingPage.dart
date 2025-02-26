@@ -29,6 +29,10 @@ import 'netowking_filter_dialog_page.dart';
 class NetworkingPage extends GetView<NetworkingController> {
   NetworkingPage({super.key});
 
+  static const routeName = "/NetworkingPage";
+
+
+  @override
   final controller = Get.put(NetworkingController());
 
   @override
@@ -42,7 +46,7 @@ class NetworkingPage extends GetView<NetworkingController> {
           margin: EdgeInsets.only(left: 7.h, top: 3),
           onTap: () => Get.back(),
         ),
-        title: ToolbarTitle(title: "Entertainment"),
+        title: const ToolbarTitle(title: "Entertainment"),
       ),
       backgroundColor: bgColor,
       body: silverBodyWidget(context),
@@ -153,7 +157,7 @@ class NetworkingPage extends GetView<NetworkingController> {
                   child: buildChildMenuBody(model),
                 );
               },
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemPositionsListener: controller.itemPositionsListener,
               indexBarData: const [...kIndexBarData],
               indexBarOptions: IndexBarOptions(

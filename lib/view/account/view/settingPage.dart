@@ -31,11 +31,11 @@ class SettingPage extends GetView<SettingController> {
   DashboardController dashboardController = Get.find();
 
   var settingItemList = [
-    MenuItem.createItem(
-        title: "privacy_preference".tr,
-        isTrailing: true,
-        color: colorSecondary,
-        leading: ImageConstant.privacy_prefrence),
+    // MenuItem.createItem(
+    //     title: "privacy_preference".tr,
+    //     isTrailing: true,
+    //     color: colorSecondary,
+    //     leading: ImageConstant.privacy_prefrence),
     MenuItem.createItem(
         title: "time_zone".tr,
         isTrailing: true,
@@ -87,10 +87,10 @@ class SettingPage extends GetView<SettingController> {
                     return GestureDetector(
                       onTap: () async {
                         switch (index) {
+                          // case 0:
+                          //   Get.toNamed(PrivacyPreference.routeName);
+                          //   break;
                           case 0:
-                            Get.toNamed(PrivacyPreference.routeName);
-                            break;
-                          case 1:
                             Get.to(() => TimezonePage());
                             break;
                           /*case 2:
@@ -98,10 +98,10 @@ class SettingPage extends GetView<SettingController> {
                                 context, "This functionality has been removed");
                             //Get.to(() => MyAvailabilityPage());
                             break;*/
-                          case 2:
+                          case 1:
                             controller.muteNotification(context);
                             break;
-                          case 3:
+                          case 2:
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -139,7 +139,7 @@ class SettingPage extends GetView<SettingController> {
                               maxLines: 2,
                             ),
                             trailing: settingItemList[index].isTrailing
-                                ? index != 2
+                                ? index != 1
                                     ? SvgPicture.asset(
                                         ImageConstant.common_arrow,
                                         width: 9,
