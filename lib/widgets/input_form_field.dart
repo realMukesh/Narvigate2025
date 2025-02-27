@@ -91,6 +91,7 @@ class InputFormFieldMobile extends StatelessWidget {
   final TextEditingController controller;
   final TextInputAction inputAction;
   final FormFieldValidator<String> validator;
+  final Color? enableFocusBorderColor;
 
   const InputFormFieldMobile({
     Key? key,
@@ -103,10 +104,12 @@ class InputFormFieldMobile extends StatelessWidget {
     this.maxLength = 50,
     this.icon = Icons.person,
     required this.validator,
+    this.enableFocusBorderColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("sam ${isMobile}");
     return TextFormField(
       enableSuggestions: false,
       autocorrect: false,
@@ -122,19 +125,28 @@ class InputFormFieldMobile extends StatelessWidget {
       //maxLength: 10,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       style: const TextStyle(
-        fontSize: 30,
+        fontSize: 32,
         fontFamily: MyConstant.currentFont,
         fontWeight: FontWeight.bold,
       ),
       cursorColor: colorSecondary,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(isMobile ? 0 : 15, 15, 15, 15),
+        contentPadding: EdgeInsets.fromLTRB(isMobile ? 0 : 0, 15, 0, 0),
         filled: true,
         hintStyle: const TextStyle(
-            color: borderEditColor, fontFamily: MyConstant.currentFont),
+          color: hintColor,
+          fontFamily: MyConstant.currentFont,
+        ),
         hintText: hintText,
         fillColor: Colors.transparent,
         counterText: '',
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: enableFocusBorderColor ?? hintColor,
+            // Change this to the unselected border color you want
+            width: 4.0, // Change this to increase the width of the bottom border when unselected
+          ),
+        ),
       ),
     );
   }

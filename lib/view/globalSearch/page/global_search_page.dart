@@ -15,7 +15,7 @@ import '../../../widgets/custom_search_view.dart';
 
 class GlobalSearchPage extends GetView<GlobalSearchController> {
   GlobalSearchPage({super.key});
-  var searchTagList = ["Sessions", "Speakers"];
+  var searchTagList = ["Sessions","Speakers"];
   static const routeName = "/globalSearchPage";
 
   final globalController = Get.put(GlobalSearchController());

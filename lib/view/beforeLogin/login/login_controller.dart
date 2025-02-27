@@ -156,6 +156,9 @@ class LoginController extends GetxController {
       if (loginResponseModel.data.body?.email != null) {
         UiHelper.showFailureMsg(
             context, loginResponseModel.data.body?.email ?? "");
+      } else if (loginResponseModel.data.body.mobile != null) {
+        UiHelper.showFailureMsg(
+            context, loginResponseModel.data.body?.mobile ?? "");
       } else {
         UiHelper.showFailureMsg(
             context, loginResponseModel!.data.message.toString());

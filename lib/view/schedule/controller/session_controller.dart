@@ -110,7 +110,7 @@ class SessionController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 2);
     // _tabController.addListener(_handleTabChange);
 
     sessionRequestModel = SessionRequestModel(

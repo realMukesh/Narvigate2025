@@ -23,19 +23,22 @@ class PhotoBoothController extends GetxController {
   late final AuthenticationManager _authManager;
   var loading = false.obs;
   final ImagePicker _picker = ImagePicker();
-  var photoList = [].obs;
-  var videoList = [].obs;
+  var photoList = <Gallery>[].obs;
+  var videoList = <Gallery>[].obs;
   var totalPhotos = 0.obs;
   late bool hasNextPage;
   int pageNumber = 0;
   var isFirstLoadRunning = false.obs;
+  var isFirstLoadVideoRunning = false.obs;
   var isLoadMoreRunning = false.obs;
+  var isLoadMoreVideoRunning = false.obs;
   var progressLoading = false.obs;
   var downloadPosition = 0.obs;
   var user_id = "";
   List<CameraDescription> cameras = [];
 
   var isMyPhotos = false.obs;
+  var isMyVideo = false.obs;
   var totalPage = 0.obs;
   var selectedTabIndex = 1.obs;
 
@@ -48,12 +51,13 @@ class PhotoBoothController extends GetxController {
 
   ScrollController scrollController = ScrollController();
   ScrollController scrollVideoController = ScrollController();
+
   @override
   void onInit() {
     super.onInit();
     _authManager = Get.find();
     user_id = _authManager.getUserId() ?? "";
-    getAllPhotos(body: {"page": "1","type":"image"}, isRefresh: false);
+    getAllPhotos(body: {"page": "1", "type": "image"}, isRefresh: false);
     getAvailableCameras();
   }
 
@@ -75,6 +79,7 @@ class PhotoBoothController extends GetxController {
         hasNextPage = model.body!.hasNextPage!;
         pageNumber = 2;
         photoList.addAll(model.body!.gallery!);
+
         _loadMorePhotos();
         update();
         isFirstLoadRunning(false);
@@ -108,8 +113,8 @@ class PhotoBoothController extends GetxController {
               scrollController.position.pixels) {
         isLoadMoreRunning(true);
         try {
-          PhotoListModel? model =
-              await apiService.getAiPhotoList({"page": pageNumber});
+          PhotoListModel? model = await apiService
+              .getAiPhotoList({"page": pageNumber, "type": "image"});
           if (model.status! && model.code == 200) {
             hasNextPage = model.body!.hasNextPage!;
             pageNumber = pageNumber + 1;
@@ -128,10 +133,10 @@ class PhotoBoothController extends GetxController {
   Future<void> getAllVideo({required dynamic body, required isRefresh}) async {
     try {
       if (!isRefresh) {
-        isFirstLoadRunning(true);
+        isFirstLoadVideoRunning(true);
       }
       PhotoListModel? model = await apiService.getAiPhotoList(body);
-      isFirstLoadRunning(false);
+      isFirstLoadVideoRunning(false);
       if (model.status! && model.code == 200) {
         isMyPhotos(false);
         uploadPhotoEnable(
@@ -144,15 +149,15 @@ class PhotoBoothController extends GetxController {
         videoList.addAll(model.body!.gallery!);
         _loadMoreVideo();
         update();
-        isFirstLoadRunning(false);
+        isFirstLoadVideoRunning(false);
       } else {
-        isFirstLoadRunning(false);
+        isFirstLoadVideoRunning(false);
         update();
       }
     } catch (e) {
-      isFirstLoadRunning(false);
+      isFirstLoadVideoRunning(false);
     } finally {
-      isFirstLoadRunning(false);
+      isFirstLoadVideoRunning(false);
     }
   }
 
@@ -169,14 +174,13 @@ class PhotoBoothController extends GetxController {
       }
 
       if (hasNextPage == true &&
-          isFirstLoadRunning.value == false &&
-          isLoadMoreRunning.value == false &&
+          isFirstLoadVideoRunning.value == false &&
+          isLoadMoreVideoRunning.value == false &&
           scrollVideoController.position.maxScrollExtent ==
               scrollVideoController.position.pixels) {
-        isLoadMoreRunning(true);
+        isLoadMoreVideoRunning(true);
         try {
-          PhotoListModel? model =
-          await apiService.getAiPhotoList({
+          PhotoListModel? model = await apiService.getAiPhotoList({
             "page": pageNumber,
             "type": "video",
           });
@@ -189,7 +193,7 @@ class PhotoBoothController extends GetxController {
         } catch (e) {
           print(e.toString());
         }
-        isLoadMoreRunning(false);
+        isLoadMoreVideoRunning(false);
       }
     });
   }
@@ -198,12 +202,10 @@ class PhotoBoothController extends GetxController {
     // tabIndex.value = index;
     if (index == 0) {
       // If on the Images tab, fetch images
-      getAllPhotos(
-          body: {"page": 1,"type":"image"}, isRefresh: false);
+      getAllPhotos(body: {"page": 1, "type": "image"}, isRefresh: false);
     } else if (index == 1) {
       // If on the Videos tab, fetch videos
-      getAllVideo(
-          body: {"page": 1, "type": "video"}, isRefresh: false);
+      getAllVideo(body: {"page": 1, "type": "video"}, isRefresh: false);
     }
   }
 
@@ -243,7 +245,7 @@ class PhotoBoothController extends GetxController {
     CommonModel? loginResponseModel =
         await apiService.uploadImage(userId, imageFile.path.toString());
     loading(false);
-    getAllPhotos(body: {"page": "1", "type":"image"}, isRefresh: true);
+    getAllPhotos(body: {"page": "1", "type": "image"}, isRefresh: true);
   }
 
   getAvailableCameras() async {

@@ -133,6 +133,7 @@ class UserDetailController extends GetxController {
     dynamic id,
     role,
   ) async {
+    debugPrint("somen $role");
     notesData.value.text = "";
     notesEdtController.text = "";
     isEditNotes(true);

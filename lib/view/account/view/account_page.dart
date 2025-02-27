@@ -358,7 +358,7 @@ class AccountPage extends GetView<AccountController> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: context.width * .15,
+                      width: context.width * .25,
                       child: CustomTextView(
                         text: "${item?.label ?? ""}:",
                         maxLines: 2,
@@ -370,12 +370,14 @@ class AccountPage extends GetView<AccountController> {
                     SizedBox(
                       width: 5.h,
                     ),
-                    CustomTextView(
-                      text: item?.value ?? "",
-                      maxLines: 2,
-                      color: colorSecondary,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
+                    Flexible(
+                      child: CustomTextView(
+                        text: item?.value ?? "",
+                        maxLines: 2,
+                        color: colorSecondary,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
                     ),
                   ],
                 ),
@@ -452,9 +454,8 @@ class AccountPage extends GetView<AccountController> {
   aiGeneratedWidget(ProfileBody? profileBody) {
     final bioParams = profileBody?.bio?.params;
     final socialMediaParams = profileBody?.socialMedia?.params;
-    return ((bioParams?.isNotEmpty ??
-        false || socialMediaParams!.isNotEmpty ??
-        false))
+    debugPrint("sam ${bioParams?.length} ${socialMediaParams?.length}");
+    return (bioParams ?? []).isNotEmpty || (socialMediaParams ?? []).isNotEmpty
         ? Column(
       children: [
         SizedBox(
@@ -465,11 +466,12 @@ class AccountPage extends GetView<AccountController> {
             Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: colorSecondary,
+                  // color: colorSecondary,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  gradient: LinearGradient(
-                    colors: [aiColor1, aiColor2],
-                  )),
+                  // gradient: LinearGradient(
+                  //   colors: [aiColor1, aiColor2],
+                  // ),
+              ),
               child: Container(
                 padding: EdgeInsets.only(
                     left: 12.h, right: 12.h, bottom: 12.h),

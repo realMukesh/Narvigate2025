@@ -2186,7 +2186,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(AppUrl.eventPhotoListApi),
                   headers: getHeaders(), body: jsonEncode(body))
               .timeout(const Duration(seconds: 30));
-      if (RepresentativeModel.fromJson(json.decode(response.body)).code ==
+      if (PhotoListModel.fromJson(json.decode(response.body)).code ==
           440) {
         tokenExpire();
       }

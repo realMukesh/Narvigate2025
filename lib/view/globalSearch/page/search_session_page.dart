@@ -80,7 +80,8 @@ class SearchSessionPage extends GetView<GlobalSearchController> {
               itemCount: controller.sessionList.length,
               itemBuilder: (context, index) {
                 return SessionListBody(
-                  isFromBookmark: true,
+                  isFromBookmark: false,
+                  isFromGlobalSearch: true,
                   session: controller.sessionList[index],
                   index: index,
                   size: controller.sessionList.length,

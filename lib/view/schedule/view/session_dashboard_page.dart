@@ -18,7 +18,7 @@ class SessionDashboardPage extends GetView<SessionController> {
 
   static const routeName = "/SessionList";
   final AuthenticationManager authenticationManager = Get.find();
-  var tabList = ["All Sessions", "", "My Sessions"];
+  var tabList = ["All Sessions","My Sessions"];
 
   @override
   final controller = Get.put(SessionController());
@@ -112,7 +112,7 @@ class SessionDashboardPage extends GetView<SessionController> {
               //     },
               //   ),
               // ),
-              Tab(text: tabList[2]
+              Tab(text: tabList[1]
                   // All Sessions
                   ),
             ],

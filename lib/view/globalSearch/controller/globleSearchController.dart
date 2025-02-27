@@ -20,7 +20,7 @@ class GlobalSearchController extends GetxController {
   var sessionList = <dynamic>[].obs;
   var isFirstLoadRunning = false.obs;
   var isLoading = false.obs;
-  var selectedSearchTag = "Exhibitors".obs;
+  var selectedSearchTag = "Sessions".obs;
   var selectedSearchIndex = 0.obs;
 
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =

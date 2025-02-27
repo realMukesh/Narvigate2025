@@ -23,6 +23,7 @@ import '../widget/session_status_widget.dart';
 class SessionListBody extends GetView<SessionController> {
   SessionsData session;
   bool isFromBookmark = false;
+  bool? isFromGlobalSearch;
   int index;
   int size;
 
@@ -30,6 +31,7 @@ class SessionListBody extends GetView<SessionController> {
       {super.key,
       required this.session,
       required this.isFromBookmark,
+      this.isFromGlobalSearch,
       required this.index,
       required this.size});
 
@@ -76,6 +78,7 @@ class SessionListBody extends GetView<SessionController> {
                         () => Stack(
                           alignment: Alignment.center,
                           children: [
+                            if(!(isFromGlobalSearch ?? false))
                             InkWell(
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,

@@ -1,6 +1,7 @@
 import 'package:dreamcast/routes/my_constant.dart';
 import 'package:dreamcast/theme/app_colors.dart';
 import 'package:dreamcast/view/skeletonView/userBodySkeleton.dart';
+import 'package:dreamcast/view/speakers/controller/speakersController.dart';
 import 'package:dreamcast/widgets/loading.dart';
 import 'package:dreamcast/view/representatives/controller/user_detail_controller.dart';
 import 'package:dreamcast/widgets/userListBody.dart';
@@ -17,7 +18,7 @@ class SearchSpeakerPage extends GetView<GlobalSearchController> {
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   GlobalKey<RefreshIndicatorState>();
-  final userController = Get.put(UserDetailController());
+  final userController = Get.put(SpeakersDetailController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,10 +101,12 @@ class SearchSpeakerPage extends GetView<GlobalSearchController> {
       isFromSearch: true,
       press: () async {
         controller.isLoading(true);
-        await userController.getUserDetailApi(
-            representatives.id,MyConstant.speakers);
+        await userController.getSpeakerDetail(
+            speakerId: representatives.id,
+            role: representatives.role,
+            isSessionSpeaker: true);
         controller.isLoading(false);
-      },
+        },
     );
   }
 }

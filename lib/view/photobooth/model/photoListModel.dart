@@ -28,7 +28,7 @@ class PhotoListModel {
 class Body {
   bool? hasNextPage;
   dynamic actionUploadEnable;
-  List<String>? gallery;
+  List<Gallery>? gallery;
   int? total;
 
   Body({this.hasNextPage, this.gallery});
@@ -37,7 +37,12 @@ class Body {
     hasNextPage = json['hasNextPage'];
     total=json['total'];
     actionUploadEnable=json["is_upload"];
-    gallery = json['gallery'].cast<String>();
+    if (json['gallery'] != null) {
+      gallery = <Gallery>[];
+      json['gallery'].forEach((v) {
+        gallery!.add(new Gallery.fromJson(v));
+      });
+    }
 
   }
 
@@ -46,8 +51,31 @@ class Body {
     data['hasNextPage'] = this.hasNextPage;
     data['is_upload'] = this.actionUploadEnable;
     data['total']=this.total;
-    data['gallery'] = this.gallery;
+    if (this.gallery != null) {
+      data['gallery'] = this.gallery!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
 
+class Gallery {
+  String? mediaFile;
+  String? mediaLink;
+  String? mediaType;
+
+  Gallery({this.mediaFile, this.mediaLink, this.mediaType});
+
+  Gallery.fromJson(Map<String, dynamic> json) {
+    mediaFile = json['media_file'];
+    mediaLink = json['media_link'];
+    mediaType = json['media_type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['media_file'] = this.mediaFile;
+    data['media_link'] = this.mediaLink;
+    data['media_type'] = this.mediaType;
     return data;
   }
 }

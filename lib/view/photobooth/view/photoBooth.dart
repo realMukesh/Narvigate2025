@@ -3,14 +3,15 @@ import 'package:dreamcast/theme/ui_helper.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/widgets/customTextView.dart';
 import 'package:dreamcast/view/photobooth/controller/photobooth_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../utils/image_constant.dart';
 import '../../../widgets/app_bar/appbar_leading_image.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
-import '../../../widgets/button/custom_icon_button.dart';
 import '../../../widgets/fullscreen_image.dart';
 import '../../../widgets/loadMoreItem.dart';
 import '../../../widgets/loading.dart';
@@ -112,24 +113,24 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                           color: colorGray,
                           fontWeight: FontWeight.w600,
                           fontSize: 22),
-                      TextButton(
-                          onPressed: () async {
-                            if (controller.isMyPhotos.value) {
-                              await controller.getAllPhotos(
-                                  body: {"page": 1, "type": "image"},
-                                  isRefresh: false);
-                            } else {
-                              controller.showPicker(context, false);
-                            }
-                          },
-                          child: CustomTextView(
-                            text: controller.isMyPhotos.value
-                                ? "All Photos"
-                                : "upload_photo".tr,
-                            color: aiColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ))
+                      // TextButton(
+                      //     onPressed: () async {
+                      //       if (controller.isMyPhotos.value) {
+                      //         await controller.getAllPhotos(
+                      //             body: {"page": 1, "type": "image"},
+                      //             isRefresh: false);
+                      //       } else {
+                      //         controller.showPicker(context, false);
+                      //       }
+                      //     },
+                      //     child: CustomTextView(
+                      //       text: controller.isMyPhotos.value
+                      //           ? "All Photos"
+                      //           : "upload_photo".tr,
+                      //       color: aiColor,
+                      //       fontSize: 18,
+                      //       fontWeight: FontWeight.normal,
+                      //     ))
                     ],
                   ),
                 ),
@@ -165,7 +166,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
               ],
             ),
             _progressEmptyWidget(),
-            controller.isAiSearchVisible.value &&
+            /*controller.isAiSearchVisible.value &&
                     controller.photoList.isNotEmpty
                 ? Align(
                     alignment: Alignment.bottomCenter,
@@ -184,7 +185,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                       ),
                     ),
                   )
-                : const SizedBox(),
+                : const SizedBox(),*/
           ],
         ),
       );
@@ -200,34 +201,34 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
             Column(
               children: [
                 Skeletonizer(
-                  enabled: controller.isFirstLoadRunning.value,
+                  enabled: controller.isFirstLoadVideoRunning.value,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomTextView(
                           text:
-                              "Total ${controller.totalPhotos.value.toString()} Photos",
+                              "Total ${controller.totalPhotos.value.toString()} videos",
                           color: colorGray,
                           fontWeight: FontWeight.w600,
                           fontSize: 22),
-                      TextButton(
-                          onPressed: () async {
-                            if (controller.isMyPhotos.value) {
-                              await controller.getAllPhotos(
-                                  body: {"page": 1, "type": "image"},
-                                  isRefresh: false);
-                            } else {
-                              controller.showPicker(context, false);
-                            }
-                          },
-                          child: CustomTextView(
-                            text: controller.isMyPhotos.value
-                                ? "All Photos"
-                                : "upload_photo".tr,
-                            color: aiColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ))
+                      // TextButton(
+                      //     onPressed: () async {
+                      //       if (controller.isMyVideo.value) {
+                      //         await controller.getAllPhotos(
+                      //             body: {"page": 1, "type": "video"},
+                      //             isRefresh: false);
+                      //       } else {
+                      //         controller.showPicker(context, false);
+                      //       }
+                      //     },
+                      //     child: CustomTextView(
+                      //       text: controller.isMyVideo.value
+                      //           ? "All Photos"
+                      //           : "upload_photo".tr,
+                      //       color: aiColor,
+                      //       fontSize: 18,
+                      //       fontWeight: FontWeight.normal,
+                      //     ))
                     ],
                   ),
                 ),
@@ -236,68 +237,27 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                 ),
                 Expanded(
                   child: RefreshIndicator(
-                      key: _refreshVideoIndicatorKey,
-                      onRefresh: () async {
-                        return Future.delayed(
-                          const Duration(seconds: 1),
-                          () async {
-                            await controller.getAllVideo(
-                              body: {"page": 1, "type": "video"},
-                              isRefresh: true,
-                            );
-                          },
-                        );
-                      },
-                      child: Skeletonizer(
-                        enabled: controller.isFirstLoadRunning.value,
-                        child: controller.isFirstLoadRunning.value
-                            ? const PhotoListSkeleton()
-                            : GridView.builder(
-                                controller: controller.scrollVideoController,
-                                padding: const EdgeInsets.all(8.0),
-                                itemCount: controller.videoList.length,
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                // Enable bouncing
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8.0,
-                                  mainAxisSpacing: 8.0,
-                                ),
-                                itemBuilder: (context, index) {
-                                  var video = controller.videoList[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Get.to(() => InAppWebviewPage(
-                                      //   title: video.name ?? "",
-                                      //   htmlPath: video.videoPath ?? "",
-                                      // ));
-                                    },
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          child: Image.network(
-                                            video.media ?? "",
-                                            height: context.height,
-                                            width: context.width,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Icons.play_circle_filled,
-                                          color: Colors.white,
-                                          size: 40,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                      )),
+                    key: _refreshVideoIndicatorKey,
+                    onRefresh: () async {
+                      return Future.delayed(
+                        const Duration(seconds: 1),
+                        () async {
+                          await controller.getAllVideo(
+                            body: {"page": 1, "type": "video"},
+                            isRefresh: true,
+                          );
+                        },
+                      );
+                    },
+                    child: loadVideoListView(),
+                  ),
                 ),
+                controller.isLoadMoreVideoRunning.value
+                    ? const LoadMoreLoading()
+                    : const SizedBox(),
+                const SizedBox(
+                  height: 12,
+                )
               ],
             ),
             _progressEmptyVideoWidget()
@@ -311,7 +271,8 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
     return Center(
       child: controller.loading.value
           ? const Loading()
-          : !controller.isFirstLoadRunning.value && controller.photoList.isEmpty
+          : !controller.isFirstLoadVideoRunning.value &&
+                  controller.videoList.isEmpty
               ? ShowLoadingPage(refreshIndicatorKey: _refreshIndicatorKey)
               : const SizedBox(),
     );
@@ -330,7 +291,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
   ///main list view
   loadListView() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 40),
+      // margin: const EdgeInsets.only(bottom: 40),
       child: Skeletonizer(
           enabled: controller.isFirstLoadRunning.value,
           child: controller.isFirstLoadRunning.value
@@ -341,7 +302,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                   controller: controller.scrollController,
                   itemCount: controller.photoList.length,
                   itemBuilder: (context, index) {
-                    String data = controller.photoList[index];
+                    String data = controller.photoList[index].mediaFile ?? "";
                     return Stack(
                       children: [
                         Align(
@@ -371,6 +332,102 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16),
                 )),
+    );
+  }
+
+  ///main video list view
+  loadVideoListView() {
+    return Container(
+      // margin: const EdgeInsets.only(bottom: 40),
+      child: Skeletonizer(
+          enabled: controller.isFirstLoadVideoRunning.value,
+          child: controller.isFirstLoadVideoRunning.value
+              ? const PhotoListSkeleton()
+              : GridView.builder(
+                  //reverse: false,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: controller.scrollVideoController,
+                  itemCount: controller.videoList.length,
+                  itemBuilder: (context, index) {
+                    Gallery data = controller.videoList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        String type = data.mediaType ?? "";
+                        String url = data.mediaLink ?? "";
+
+                        if (type.contains("youtube") == true ||
+                            type.contains("vimeo") == true ||
+                            type.contains("html5") == true) {
+                          UiHelper.inAppWebView(Uri.parse(url));
+                        } else {
+                          UiHelper.inAppBrowserView(Uri.parse(url));
+                        }
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              height: context.height,
+                              width: context.width,
+                              child: UiHelper.getPhotoBoothImage(
+                                  imageUrl: data.mediaFile ?? ""),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.play_circle_filled,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1 / 1,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16),
+                )),
+    );
+  }
+
+  _buildVideoPlayer({url}) {
+    return InAppWebView(
+      initialUrlRequest: URLRequest(url: WebUri(url)),
+      onEnterFullscreen: (controller) async {
+        await SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.landscapeRight,
+          DeviceOrientation.landscapeLeft,
+        ]);
+      },
+      onExitFullscreen: (controller) async {
+        await SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.landscapeRight,
+          DeviceOrientation.landscapeLeft,
+        ]);
+      },
+      initialOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(
+          mediaPlaybackRequiresUserGesture: false,
+        ),
+        ios: IOSInAppWebViewOptions(
+          allowsInlineMediaPlayback: true,
+        ),
+      ),
+      androidOnPermissionRequest: (InAppWebViewController controller,
+          String origin, List<String> resources) async {
+        await Permission.camera.request();
+        await Permission.microphone.request();
+        return PermissionRequestResponse(
+            resources: resources,
+            action: PermissionRequestResponseAction.GRANT);
+      },
     );
   }
 }
