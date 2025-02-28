@@ -37,6 +37,7 @@ class UserDetailBody {
   String? shortName;
   String? company;
   String? position;
+  String? association;
   String? avatar;
   String? role;
   String? timezone;
@@ -60,6 +61,7 @@ class UserDetailBody {
       this.shortName,
       this.company,
       this.position,
+      this.association,
       this.avatar,
       this.role,
       this.timezone,
@@ -81,6 +83,7 @@ class UserDetailBody {
     shortName = json['short_name'];
     company = json['company'];
     position = json['position'];
+    association = json['association'];
     avatar = json['avatar'];
     role = json['role'];
     timezone = json['timezone'];
@@ -109,6 +112,7 @@ class UserDetailBody {
     data['short_name'] = this.shortName;
     data['company'] = this.company;
     data['position'] = this.position;
+    data['association'] = this.association;
     data['avatar'] = this.avatar;
     data['role'] = this.role;
     data['timezone'] = this.timezone;

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../utils/image_constant.dart';
 
 class HomeWelcomeBanner extends GetView<HomeController> {
@@ -24,7 +25,9 @@ class HomeWelcomeBanner extends GetView<HomeController> {
               child: CircularProgressIndicator(),
             ),
             errorWidget: (context, url, error) =>
-                Image.asset(ImageConstant.banner_img, fit: BoxFit.cover),
+                Skeletonizer(
+                    enabled: true,
+                    child: Image.asset(ImageConstant.banner_img, fit: BoxFit.cover)),
           ),
         );
       },

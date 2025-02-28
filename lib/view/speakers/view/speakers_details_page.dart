@@ -270,6 +270,7 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
           CompanyPositionWidget(
             company: personalObject.company ?? "",
             position: personalObject.position ?? "",
+            association: personalObject.association ?? "",
           ),
           const SizedBox(
             height: 18,

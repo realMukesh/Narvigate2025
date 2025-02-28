@@ -34,7 +34,7 @@ class MyBadgePage extends GetView<QrPageController> {
           height: context.height,
           child: Stack(
             children: [
-              false
+              true
                   ? createBadge(context)
                   : controller.qrBadge.isNotEmpty &&
                           controller.qrBadge.contains(".pdf")
@@ -122,9 +122,14 @@ class MyBadgePage extends GetView<QrPageController> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(height: 50.adaptSize),
-                  SizedBox(
-                    height: 71.adaptSize,
+                  SizedBox(height: 30.adaptSize),
+                  Container(
+                    height: 80.adaptSize,
+                    width: 80.adaptSize,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
                     child: CachedNetworkImage(
                       imageUrl: authManager.getImage() ?? "",
                       imageBuilder: (context, imageProvider) => Container(
@@ -169,7 +174,7 @@ class MyBadgePage extends GetView<QrPageController> {
                               data: controller.qrBadge.value ??
                                   "", // Replace with your data
                               version: QrVersions.auto,
-                              size: 170.0.adaptSize,
+                              size: 200.0.adaptSize,
                             ),
                           ),
                         )
@@ -183,74 +188,74 @@ class MyBadgePage extends GetView<QrPageController> {
                   SizedBox(
                     height: 26.adaptSize,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 23),
-                    decoration: BoxDecoration(
-                        color: white,
-                        border: Border.all(color: colorSecondary, width: 1),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(18),
-                        )),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/svg/share_icon.svg",
-                          color: colorSecondary,
-                        ),
-                        SizedBox(
-                          width: 13.h,
-                        ),
-                        CustomTextView(
-                          text: "Share QR",
-                          color: colorSecondary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                          bottom: 23.adaptSize, top: 84.adaptSize),
-                      padding: EdgeInsets.all(23.adaptSize),
-                      decoration: BoxDecoration(
-                          color: colorLightGray,
-                          border:
-                              Border.all(color: Colors.transparent, width: 1),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          )),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const CustomTextView(
-                                text: "Share my profile",
-                                textAlign: TextAlign.start,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              SvgPicture.asset(
-                                  "assets/svg/ic_toggle_button.svg")
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 8),
-                            child: CustomTextView(
-                              textAlign: TextAlign.start,
-                              text:
-                                  "Your complete profile will be shared with all your friends!",
-                              maxLines: 2,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          )
-                        ],
-                      )),
+                  // Container(
+                  //   padding: const EdgeInsets.symmetric(
+                  //       vertical: 10, horizontal: 23),
+                  //   decoration: BoxDecoration(
+                  //       color: white,
+                  //       border: Border.all(color: colorSecondary, width: 1),
+                  //       borderRadius: const BorderRadius.all(
+                  //         Radius.circular(18),
+                  //       )),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       SvgPicture.asset(
+                  //         "assets/svg/share_icon.svg",
+                  //         color: colorSecondary,
+                  //       ),
+                  //       SizedBox(
+                  //         width: 13.h,
+                  //       ),
+                  //       const CustomTextView(
+                  //         text: "Share QR",
+                  //         color: colorSecondary,
+                  //         fontWeight: FontWeight.w500,
+                  //         fontSize: 14,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  // Container(
+                  //     margin: EdgeInsets.only(
+                  //         bottom: 23.adaptSize, top: 84.adaptSize),
+                  //     padding: EdgeInsets.all(23.adaptSize),
+                  //     decoration: BoxDecoration(
+                  //         color: colorLightGray,
+                  //         border:
+                  //             Border.all(color: Colors.transparent, width: 1),
+                  //         borderRadius: const BorderRadius.all(
+                  //           Radius.circular(10),
+                  //         )),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             const CustomTextView(
+                  //               text: "Share my profile",
+                  //               textAlign: TextAlign.start,
+                  //               fontSize: 18,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //             SvgPicture.asset(
+                  //                 "assets/svg/ic_toggle_button.svg")
+                  //           ],
+                  //         ),
+                  //         const Padding(
+                  //           padding: EdgeInsets.only(top: 8),
+                  //           child: CustomTextView(
+                  //             textAlign: TextAlign.start,
+                  //             text:
+                  //                 "Your complete profile will be shared with all your friends!",
+                  //             maxLines: 2,
+                  //             fontSize: 16,
+                  //             fontWeight: FontWeight.normal,
+                  //           ),
+                  //         )
+                  //       ],
+                  //     )),
                 ],
               ),
             ),

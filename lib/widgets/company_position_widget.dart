@@ -6,8 +6,9 @@ import 'customTextView.dart';
 class CompanyPositionWidget extends StatelessWidget {
   String company;
   String position;
+  String? association;
   CompanyPositionWidget(
-      {super.key, required this.company, required this.position});
+      {super.key, required this.company, required this.position, this.association});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,14 @@ class CompanyPositionWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: colorGray,
                 text: company)
+            : const SizedBox(),
+        (association ?? "").isNotEmpty
+            ? CustomTextView(
+                maxLines: 3,
+                fontSize: 16,textAlign: TextAlign.center,
+                fontWeight: FontWeight.w600,
+                color: colorGray,
+                text: association ?? "")
             : const SizedBox(),
       ],
     );

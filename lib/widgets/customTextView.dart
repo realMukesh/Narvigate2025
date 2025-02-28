@@ -134,8 +134,8 @@ class CustomReadMoreText extends StatelessWidget {
       colorClickableText: accentColor,
       trimCollapsedText: 'Read more',
       trimExpandedText: ' Read less',
-      lessStyle: const TextStyle(
-          fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xff0052D9)),
+      lessStyle: TextStyle(
+          fontSize: 14.fSize, fontWeight: FontWeight.w500, color: colorPrimary),
       textAlign: TextAlign.start,
       style: GoogleFonts.getFont(MyConstant.currentFont,
           color: color,
@@ -147,8 +147,8 @@ class CustomReadMoreText extends StatelessWidget {
               : centerUnderline
                   ? TextDecoration.lineThrough
                   : TextDecoration.none),
-      moreStyle: const TextStyle(
-          fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xff0052D9)),
+      moreStyle: TextStyle(
+          fontSize: 14.fSize, fontWeight: FontWeight.w500, color: colorPrimary),
     );
   }
 }

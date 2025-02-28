@@ -370,7 +370,7 @@ class WatchDetailPage extends GetView<SessionController> {
             height: 6,
           ),
           CustomReadMoreText(
-            text: controller.sessionDetailBody.description ?? "",
+            text: 'controller.sessionDetailBody.description ?? ""\nsfiwngfnwregwerg\nerwgdrgdgdfg\nsdfsgsag\nafgsagfafs\nafsgasg\nasdgasg\nadfssaf\nasdfasd\n\nn\\nn\n\nesagawrgar',
             textAlign: TextAlign.start,
             fontSize: 14,
             color: colorSecondary,

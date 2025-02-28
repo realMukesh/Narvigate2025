@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dreamcast/routes/my_constant.dart';
 import 'package:dreamcast/view/schedule/controller/session_controller.dart';
 import 'package:dreamcast/view/speakers/model/speakersModel.dart';
@@ -15,6 +18,9 @@ class SessionSpeakerList extends GetView<SessionController> {
 
   @override
   Widget build(BuildContext context) {
+
+    log("SessionSpeakerList ${jsonEncode(speakerList)}");
+
     return ListView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,

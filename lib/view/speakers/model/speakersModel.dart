@@ -63,6 +63,7 @@ class SpeakersData extends ISuspensionBean {
   String? shortName;
   String? company;
   String? position;
+  String? association;
   dynamic avatar;
   String? role;
   String? timezone;
@@ -79,6 +80,7 @@ class SpeakersData extends ISuspensionBean {
       this.shortName,
       this.company,
       this.position,
+      this.association,
       this.avatar,
       this.role,
       this.timezone,
@@ -91,6 +93,7 @@ class SpeakersData extends ISuspensionBean {
     shortName = json['short_name'];
     company = json['company'];
     position = json['position'];
+    association = json['association'];
     avatar = json['avatar'];
     role = json['role'];
     timezone = json['timezone'];
@@ -107,6 +110,7 @@ class SpeakersData extends ISuspensionBean {
     data['short_name'] = this.shortName;
     data['company'] = this.company;
     data['position'] = this.position;
+    data['association'] = this.association;
     data['avatar'] = this.avatar;
     data['role'] = this.role;
     data['timezone'] = this.timezone;

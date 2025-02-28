@@ -31,6 +31,7 @@ class SpeakerViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: context.width,
       margin: EdgeInsets.zero,
@@ -79,10 +80,18 @@ class SpeakerViewWidget extends StatelessWidget {
                                       fontWeight: FontWeight.normal,
                                       textAlign: TextAlign.start,
                                     ),
-                              speakerData.company.toString().isEmpty
-                                  ? const SizedBox()
-                                  : CustomTextView(
+                              if((speakerData.company ?? "").isNotEmpty)
+                                CustomTextView(
                                       text: speakerData.company ?? "",
+                                      fontSize: 14,
+                                      maxLines: 1,
+                                      color: colorGray,
+                                      fontWeight: FontWeight.w600,
+                                      textAlign: TextAlign.start,
+                                    ),
+                              if((speakerData.association ?? "").isNotEmpty)
+                                CustomTextView(
+                                      text: speakerData.association ?? "",
                                       fontSize: 14,
                                       maxLines: 1,
                                       color: colorGray,
@@ -125,7 +134,9 @@ class SpeakerViewWidget extends StatelessWidget {
                                       }
                                       speakerData.isLoading(true);
                                       await controller.bookmarkToUser(
-                                          speakerData.id, speakerData.role);
+                                        speakerData.id,
+                                        speakerData.role ?? MyConstant.speakers,
+                                      );
                                       speakerData.isLoading(false);
                                     },
                                     child: Padding(

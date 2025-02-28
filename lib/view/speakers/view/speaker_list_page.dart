@@ -55,7 +55,7 @@ class SpeakerListPage extends GetView<SpeakerNetworkController> {
             Get.back();
           },
         ),
-        title: ToolbarTitle(title: controller.role == MyConstant.speakers ? "speakers".tr : "entertainment".tr),
+        title: ToolbarTitle(title: controller.role == MyConstant.speakers ? "speakers".tr : controller.title),
       ),
       body: silverBodyWidget(context),
     );

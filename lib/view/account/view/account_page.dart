@@ -454,7 +454,6 @@ class AccountPage extends GetView<AccountController> {
   aiGeneratedWidget(ProfileBody? profileBody) {
     final bioParams = profileBody?.bio?.params;
     final socialMediaParams = profileBody?.socialMedia?.params;
-    debugPrint("sam ${bioParams?.length} ${socialMediaParams?.length}");
     return (bioParams ?? []).isNotEmpty || (socialMediaParams ?? []).isNotEmpty
         ? Column(
       children: [

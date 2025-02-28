@@ -136,7 +136,6 @@ class HubController extends GetxController {
   }
 
   commonMenuRouting({required MenuData menuData}) {
-    print("sam ${menuData.slug}");
     if (_isButtonDisabled) return; // Prevent further clicks
     _isButtonDisabled = true;
     Future.delayed(const Duration(seconds: 2), () {
@@ -210,7 +209,7 @@ class HubController extends GetxController {
       case "user":
         Get.toNamed(
           SpeakerListPage.routeName,
-          arguments: {"role": menuData.slug},
+          arguments: {"role": menuData.slug, "title": menuData.label},
         );
         break;
       case "agenda":

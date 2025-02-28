@@ -40,6 +40,7 @@ class SpeakerNetworkController extends GetxController
   var tempFilterBody = UserBodyFilter().obs;
   var isFilterApply = false.obs;
   var role = MyConstant.speakers;
+  var title = MyConstant.speakers;
   //extra field.
   TextEditingController searchController = TextEditingController();
 
@@ -64,6 +65,7 @@ class SpeakerNetworkController extends GetxController
     super.onInit();
     if(Get.arguments != null){
       role = Get.arguments["role"];
+      title = Get.arguments["title"];
     }
     _authenticationManager = Get.find();
     userDetailController = Get.put(SpeakersDetailController());

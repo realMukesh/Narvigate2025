@@ -1,4 +1,5 @@
 import 'package:dreamcast/core/extension/content_extension.dart';
+import 'package:dreamcast/theme/app_colors.dart';
 import 'package:dreamcast/widgets/customTextView.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,7 @@ class _ReadMoreLinkifyState extends State<ReadMoreLinkify> {
                   padding: const EdgeInsets.only(top: 0.0),
                   child: CustomTextView(text:
                     isExpanded ? 'Read Less' : 'Read More',
-                    fontWeight: FontWeight.w500,color: Colors.blueAccent,fontSize: 15,
+                    fontWeight: FontWeight.w500,color: colorPrimary, fontSize: 15,
                   ),
                 ),
               )
