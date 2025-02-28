@@ -5,7 +5,7 @@ class AppUrl {
 
   /*used for the dynamic base url*/
   static const eventAppNode = "EventAppBaseUrl";
-  static String defaultNodeName = "dreamcastEventApp";
+  static String defaultNodeName = "narvigate2025";
 
   ///firebase database url dynamic updater from splash controller
   static String setDataBaseUrl =
@@ -19,8 +19,8 @@ class AppUrl {
 
   /****************dynamic base url updated from the auth manager*****/
 
- /* static String baseURLV1 =
-      'https://eventapp.godreamcast.com/conf-expo/api/v1'; // production*/
+  // static String baseURLV1 =
+  //     'https://eappsapi.vehub.live/narvigate_2025/api/v1'; // production
 
   static String baseURLV1 =
       'https://live.dreamcast.in/narvigate_2025/api/v1';   /// staging url

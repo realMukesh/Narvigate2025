@@ -134,11 +134,11 @@ class AuthenticationManager extends GetxController with CacheManager {
         .listen((event) {
       if (event.snapshot.value != null) {
         final json = event.snapshot.value as Map<dynamic, dynamic>;
-        /*if (json["endPointv2"] != null &&
-            json["endPointv2"].toString().isNotEmpty) {
-            //AppUrl.baseURLV1 = json["endPointv2"];
-          print("AppUrl.baseURLV1 ${AppUrl.baseURLV1}");
-        }*/
+        // if (json["endPoint"] != null &&
+        //     json["endPoint"].toString().isNotEmpty) {
+        //     // AppUrl.baseURLV1 = json["endPoint"];
+        //   print("AppUrl.baseURLV1 ${AppUrl.baseURLV1}");
+        // }
       }
     });
     if (getAuthToken() != null && getAuthToken()!.isNotEmpty) {
