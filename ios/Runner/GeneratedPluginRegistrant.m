@@ -12,8 +12,8 @@
 @import add_2_calendar;
 #endif
 
-#if __has_include(<app_links/AppLinksIosPlugin.h>)
-#import <app_links/AppLinksIosPlugin.h>
+#if __has_include(<app_links/AppLinksPlugin.h>)
+#import <app_links/AppLinksPlugin.h>
 #else
 @import app_links;
 #endif
@@ -286,7 +286,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [Add2CalendarPlugin registerWithRegistrar:[registry registrarForPlugin:@"Add2CalendarPlugin"]];
-  [AppLinksIosPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksIosPlugin"]];
+  [AppLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppLinksPlugin"]];
   [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
   [AudioplayersDarwinPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersDarwinPlugin"]];
   [AwesomeNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"AwesomeNotificationsPlugin"]];

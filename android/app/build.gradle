@@ -46,14 +46,14 @@ android {
 
     defaultConfig {
         /* 123456
-        Alias
-        dreamcast
+         Alias
+        narvigate2024
         123456*/
         applicationId "com.dreamcast.narvigate"
         minSdkVersion 24
         targetSdkVersion 34
         compileSdkVersion 34
-        versionCode 13
+        versionCode 14
         versionName "1.2.0"
         multiDexEnabled true
     }

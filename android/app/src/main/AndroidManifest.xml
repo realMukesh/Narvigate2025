@@ -67,7 +67,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="live.dreamcast.in" android:pathPrefix="/dc_eventapp_2025/app"/>
+                <data android:host="live.dreamcast.in" android:pathPrefix="/narvigate2025"/>
             </intent-filter>
 
 
