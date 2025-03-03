@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dreamcast/model/guide_model.dart';
 import 'package:dreamcast/theme/ui_helper.dart';
@@ -801,6 +802,7 @@ class ApiService extends GetxService {
           await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
               .get(Uri.parse(AppUrl.getConfigDetail), headers: getHeaders())
               .timeout(const Duration(seconds: 30));
+      log("somen getHomePageData ${response.body}");
       if (HomePageModel.fromJson(json.decode(response.body)).code == 440) {
         tokenExpire();
       }
@@ -1243,13 +1245,14 @@ class ApiService extends GetxService {
 
   Future<RepresentativeFilterModel> getRepresentativeFilterList(
       Map<String, String> requestBody) async {
+    log("sam getRepresentativeFilterList ${requestBody}");
     try {
       final response =
           await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
               .post(Uri.parse("${AppUrl.usersListApi}/getFilters"),
                   headers: getHeaders(), body: jsonEncode(requestBody))
               .timeout(const Duration(seconds: 30));
-      Logger.log(response.body);
+      log("sam getRepresentativeFilterList ${response.body}");
       if (RepresentativeFilterModel.fromJson(json.decode(response.body)).code ==
           440) {
         tokenExpire();

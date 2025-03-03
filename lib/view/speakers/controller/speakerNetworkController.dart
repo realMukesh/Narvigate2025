@@ -216,7 +216,7 @@ class SpeakerNetworkController extends GetxController
   ///reset the filter
   Future<void> getAndResetFilter(
       {required isRefresh, bool? isFromReset}) async {
-    var requestBody = {"role": MyConstant.speakers};
+    var requestBody = {"role": role};
     isLoading(isRefresh);
     RepresentativeFilterModel? model =
         await apiService.getRepresentativeFilterList(requestBody);

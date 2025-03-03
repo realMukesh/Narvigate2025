@@ -12,6 +12,7 @@ import '../../../utils/image_constant.dart';
 import '../../../widgets/app_bar/appbar_leading_image.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
 import '../../../widgets/contact_list_widget.dart';
+import '../../../widgets/loadMoreItem.dart';
 import '../../../widgets/toolbarTitle.dart';
 import '../../skeletonView/userBodySkeleton.dart';
 import '../controller/contact_controller.dart';
@@ -21,6 +22,7 @@ import '../model/contact_list_model.dart';
 
 class MyContactListPage extends GetView<ContactController> {
   static const routeName = "/ContactListPage";
+
   MyContactListPage({super.key});
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -29,6 +31,7 @@ class MyContactListPage extends GetView<ContactController> {
 
   @override
   final controller = Get.put(ContactController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,35 +66,38 @@ class MyContactListPage extends GetView<ContactController> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _headerButton(context),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Expanded(
-                      child: RefreshIndicator(
-                    color: colorLightGray,
-                    backgroundColor: colorPrimary,
-                    strokeWidth: 1.0,
-                    key: _refreshIndicatorKey,
-                    onRefresh: () {
-                      return Future.delayed(
-                        const Duration(seconds: 1),
-                        () {
-                          controller.getContactList(requestBody: {
-                            "page": "1",
-                            "filters": {
-                              "search": "",
-                              "sort": "ASC",
-                              "type": controller
-                                  .filterContactBody.value.selectedItem ??
-                                  ""
-                            }
-                          });
-                        },
-                      );
-                    },
-                    child: buildListView(context),
-                  )),
+                    child: RefreshIndicator(
+                      color: colorLightGray,
+                      backgroundColor: colorPrimary,
+                      strokeWidth: 1.0,
+                      key: _refreshIndicatorKey,
+                      onRefresh: () {
+                        return Future.delayed(
+                          const Duration(seconds: 1),
+                          () {
+                            controller.getContactList(requestBody: {
+                              "page": "1",
+                              "filters": {
+                                "search": "",
+                                "sort": "ASC",
+                                "type": controller
+                                        .filterContactBody.value.selectedItem ??
+                                    ""
+                              }
+                            });
+                          },
+                        );
+                      },
+                      child: buildListView(context),
+                    ),
+                  ),
                   // when the _loadMore function is running
                   controller.isLoadMoreRunning.value
-                      ? const Loading()
+                      ? const LoadMoreLoading()
                       : const SizedBox()
                 ],
               ),
@@ -141,22 +147,23 @@ class MyContactListPage extends GetView<ContactController> {
                   const SizedBox(
                     width: 6,
                   ),
-                  Flexible(child: CustomTextView(
-                    text:
-                    controller.filterContactBody.value.selectedItem !=
-                                    null &&
-                                controller.filterContactBody.value.selectedItem
-                                    .toString()
-                                    .isNotEmpty
-                            ? controller
-                                .filterContactBody.value.selectedItem
-                                .toString()
-                            : controller.filterContactBody.value.label ??
-                                "Loading",
+                  CustomTextView(
+                    text: (controller.filterContactBody.value.options !=
+                                null &&
+                            controller
+                                .filterContactBody.value.options!.isNotEmpty)
+                        ? controller
+                            .filterContactBody
+                            .value
+                            .options![controller.selectedFilterIndex.value]
+                            .text
+                            .toString()
+                        : "Loading..",
                     fontWeight: FontWeight.w500,
-                    fontSize: 15,maxLines: 1,
+                    fontSize: 15,
+                    maxLines: 1,
                     textOverflow: TextOverflow.ellipsis,
-                  ))
+                  )
                 ],
               ),
             ),
@@ -197,7 +204,8 @@ class MyContactListPage extends GetView<ContactController> {
                   const CustomTextView(
                     text: "Export",
                     fontWeight: FontWeight.w500,
-                    fontSize: 15,color: colorSecondary,
+                    fontSize: 15,
+                    color: colorSecondary,
                   )
                 ],
               ),
@@ -207,7 +215,6 @@ class MyContactListPage extends GetView<ContactController> {
       ),
     );
   }
-  
 
   Widget _progressEmptyWidget() {
     return Center(
@@ -274,48 +281,47 @@ class MyContactListPage extends GetView<ContactController> {
         child: Padding(
           padding: EdgeInsets.zero,
           child: ListView.builder(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              scrollDirection: Axis.vertical,
-              itemCount:
-                  controller.filterContactBody.value.options?.length ?? 0,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                var data = controller.filterContactBody.value.options?[index];
-                return InkWell(
-                  onTap: () {
-                    showPopup(false);
-                    controller.filterContactBody.value.selectedItem =
-                        data?.text ?? "";
-                    controller.getContactList(
-                      requestBody: {
-                        "page": "1",
-                        "filters": {
-                          "search": "",
-                          "sort": "ASC",
-                          "type": data?.value ?? ""
-                        }
-                      },
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 0, vertical: 3),
-                    child: CustomTextView(
-                      text: data?.text ?? "",
-                      fontWeight: FontWeight.w600,
-                      color:
-                          controller.filterContactBody.value.selectedItem ==
-                                  data?.text
-                              ? colorSecondary
-                              : colorGray,
-                      fontSize: 15,
-                      textAlign: TextAlign.start,
-                    ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            scrollDirection: Axis.vertical,
+            itemCount: controller.filterContactBody.value.options?.length ?? 0,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              var data = controller.filterContactBody.value.options?[index];
+              return InkWell(
+                onTap: () {
+                  showPopup(false);
+                  controller.selectedFilterIndex(index);
+                  controller.filterContactBody.value.selectedItem =
+                      data?.value ?? "";
+                  controller.getContactList(
+                    requestBody: {
+                      "page": "1",
+                      "filters": {
+                        "search": "",
+                        "sort": "ASC",
+                        "type": data?.value ?? ""
+                      }
+                    },
+                  );
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 3),
+                  child: CustomTextView(
+                    text: data?.text ?? "",
+                    fontWeight: FontWeight.w600,
+                    color: controller.filterContactBody.value.selectedItem ==
+                            data?.value
+                        ? colorSecondary
+                        : colorGray,
+                    fontSize: 15,
+                    textAlign: TextAlign.start,
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

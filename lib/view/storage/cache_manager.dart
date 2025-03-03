@@ -13,6 +13,9 @@ enum CacheManagerKey {
   TIMEZONE,
   dreamcast_chat_id,
   EMAIL,
+  COMPANY,
+  ASSOCIATION,
+  POSITION,
   FEED_EMAIL,
   URL,
   QR_CODE,
@@ -80,7 +83,11 @@ mixin CacheManager {
       required String userId,
       required String chatId,
       required String email,
-      required String category}) async {
+      required String category,
+        required String company,
+        required String association,
+        required String position,
+      }) async {
     final box = GetStorage();
     await box.write(CacheManagerKey.NAME.toString(), fullName);
     await box.write(CacheManagerKey.USERNAME.toString(), username);
@@ -89,6 +96,9 @@ mixin CacheManager {
     await box.write(CacheManagerKey.USER_ID.toString(), userId);
     await box.write(CacheManagerKey.dreamcast_chat_id.toString(), chatId);
     await box.write(CacheManagerKey.EMAIL.toString(), email);
+    await box.write(CacheManagerKey.COMPANY.toString(), company);
+    await box.write(CacheManagerKey.ASSOCIATION.toString(), association);
+    await box.write(CacheManagerKey.POSITION.toString(), position);
     await box.write("category", category);
 
     return true;
@@ -124,6 +134,21 @@ mixin CacheManager {
   String? getDreamcastId() {
     final box = GetStorage();
     return box.read(CacheManagerKey.dreamcast_chat_id.toString());
+  }
+
+  String? getAssociation() {
+    final box = GetStorage();
+    return box.read(CacheManagerKey.ASSOCIATION.toString());
+  }
+
+  String? getCompany() {
+    final box = GetStorage();
+    return box.read(CacheManagerKey.COMPANY.toString());
+  }
+
+  String? getPosition() {
+    final box = GetStorage();
+    return box.read(CacheManagerKey.POSITION.toString());
   }
 
   bool? isMeeting() {

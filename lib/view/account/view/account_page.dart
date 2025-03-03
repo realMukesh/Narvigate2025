@@ -408,6 +408,7 @@ class AccountPage extends GetView<AccountController> {
         CompanyPositionWidget(
           company: controller.profileBody?.position ?? "",
           position: controller.profileBody?.company ?? "",
+          association: controller.profileBody?.association ?? "",
         ),
       ],
     );

@@ -78,9 +78,12 @@ class AccountController extends GetxController {
         profile: model.profileBody?.avatar ?? "",
         userId: _authManager.getUserId() ?? "",
         role: model.profileBody?.role ?? "",
+        company: model.profileBody?.company ?? "",
+        position: model.profileBody?.position ?? "",
         email: _authManager.getEmail() ?? "",
         chatId: _authManager.getDreamcastId() ?? "",
         category: _authManager.getCategory() ?? "",
+        association: model.profileBody?.association ?? "",
       );
       profilePicUrl(model.profileBody?.avatar ?? "");
       _authManager.savePrivacyData(

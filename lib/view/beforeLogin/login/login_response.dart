@@ -33,6 +33,7 @@ class Body {
   String? name;
   String? shortName;
   String? company;
+  String? association;
   String? position;
   dynamic avatar;
   String? role;
@@ -55,6 +56,7 @@ class Body {
       this.name,
       this.shortName,
       this.company,
+      this.association,
       this.position,
       this.avatar,
       this.role,
@@ -77,6 +79,7 @@ class Body {
     name = json['name'];
     shortName = json['short_name'];
     company = json['company'];
+    association = json['association'];
     position = json['position'];
     avatar = json['avatar'];
     role = json['role'];
@@ -101,6 +104,7 @@ class Body {
     data['name'] = this.name;
     data['short_name'] = this.shortName;
     data['company'] = this.company;
+    data['association'] = this.association;
     data['position'] = this.position;
     data['avatar'] = this.avatar;
     data['role'] = this.role;

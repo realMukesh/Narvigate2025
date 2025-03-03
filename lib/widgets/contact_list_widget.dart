@@ -97,8 +97,18 @@ class ContactListBody extends GetView<ContactController> {
                               color: colorGray,
                               textAlign: TextAlign.start,
                             ),
-                            CustomTextView(
+                            if((representatives.company ?? "").isNotEmpty)
+                              CustomTextView(
                               text: "${representatives.company ?? ""}",
+                              fontSize: 14,
+                              maxLines: 2,
+                              fontWeight: FontWeight.w600,
+                              color: colorGray,
+                              textAlign: TextAlign.start,
+                            ),
+                            if((representatives.association ?? "").isNotEmpty)
+                              CustomTextView(
+                              text: "${representatives.association ?? ""}",
                               fontSize: 14,
                               maxLines: 2,
                               fontWeight: FontWeight.w600,

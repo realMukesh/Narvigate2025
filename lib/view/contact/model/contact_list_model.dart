@@ -240,6 +240,7 @@ class Contacts {
   String? shortName;
   String? name;
   String? company;
+  String? association;
   String? position;
   String? email;
   String? mobile;
@@ -252,6 +253,7 @@ class Contacts {
         this.shortName,
         this.name,
         this.company,
+        this.association,
         this.position,
         this.email,
         this.mobile,
@@ -264,6 +266,7 @@ class Contacts {
     shortName = json['short_name'];
     name = json['name'];
     company = json['company'];
+    association = json['association'];
     position = json['position'];
     email = json['email'];
     mobile = json['mobile'];
@@ -278,6 +281,7 @@ class Contacts {
     data['short_name'] = this.shortName;
     data['name'] = this.name;
     data['company'] = this.company;
+    data['association'] = this.association;
     data['position'] = this.position;
     data['email'] = this.email;
     data['mobile'] = this.mobile;

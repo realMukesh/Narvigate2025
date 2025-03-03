@@ -71,8 +71,9 @@ class MyBadgePage extends GetView<QrPageController> {
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
-          errorWidget: (context, url, error) =>
-              controller.loading.value?const SizedBox():Text(controller.badgeMessage.value ?? ""),
+          errorWidget: (context, url, error) => controller.loading.value
+              ? const SizedBox()
+              : Text(controller.badgeMessage.value ?? ""),
         ),
       ),
     );
@@ -123,44 +124,68 @@ class MyBadgePage extends GetView<QrPageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 30.adaptSize),
-                  Container(
-                    height: 80.adaptSize,
-                    width: 80.adaptSize,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: authManager.getImage() ?? "",
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.contain),
+
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 80.adaptSize,
+                        width: 80.adaptSize,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: authManager.getImage() ?? "",
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.contain),
+                            ),
+                          ),
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Image.asset("assets/icons/logo.png"),
                         ),
                       ),
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
+                      const SizedBox(width: 10.0),
+                      Column(
+                        children: [
+                          CustomTextView(
+                            text: authManager.getName() ?? "",
+                            fontSize: 22,
+                            maxLines: 2,
+                            fontWeight: FontWeight.w600,
+                            color: colorSecondary,
+                          ),
+                          if ((authManager.getPosition() ?? "").isNotEmpty)
+                            CustomTextView(
+                              text: authManager.getPosition() ?? "",
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              color: colorGray,
+                            ),
+                          if ((authManager.getAssociation() ?? "").isNotEmpty)
+                            CustomTextView(
+                              text: authManager.getAssociation() ?? "",
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              color: colorGray,
+                            ),
+                          if ((authManager.getCompany() ?? "").isNotEmpty)
+                            CustomTextView(
+                              text: authManager.getCompany() ?? "",
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                              color: colorGray,
+                            ),
+                        ],
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset("assets/icons/logo.png"),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 6.0),
-                  CustomTextView(
-                    text: authManager.getName() ?? "",
-                    fontSize: 22,
-                    maxLines: 2,
-                    fontWeight: FontWeight.w600,
-                    color: colorSecondary,
-                  ),
-                  SizedBox(height: 5.0.adaptSize),
-                  CustomTextView(
-                    text: authManager.getCategory() ?? "",
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                    color: colorGray,
-                  ),
-                  SizedBox(height: 24.0.adaptSize),
+                  SizedBox(height: 34.0.adaptSize),
                   controller.badgeMessage.value.isNotEmpty
                       ? Card(
                           elevation: 5,
@@ -174,7 +199,7 @@ class MyBadgePage extends GetView<QrPageController> {
                               data: controller.qrBadge.value ??
                                   "", // Replace with your data
                               version: QrVersions.auto,
-                              size: 200.0.adaptSize,
+                              size: 250.0.adaptSize,
                             ),
                           ),
                         )
@@ -188,6 +213,11 @@ class MyBadgePage extends GetView<QrPageController> {
                   SizedBox(
                     height: 26.adaptSize,
                   ),
+                  if (controller.qrBadge.value.isNotEmpty)
+                    CustomTextView(
+                      text: (controller.qrBadge.value).toUpperCase(),
+                      fontSize: 20,
+                    ),
                   // Container(
                   //   padding: const EdgeInsets.symmetric(
                   //       vertical: 10, horizontal: 23),

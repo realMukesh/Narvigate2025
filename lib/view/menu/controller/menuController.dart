@@ -220,17 +220,13 @@ class HubController extends GetxController {
         Get.toNamed(HelpDeskDashboard.routeName);
         break;
       case "partners":
-        if (Get.isRegistered<BootController>()) {
-          Get.delete<BootController>();
-        }
-        Get.toNamed(BootListPage.routeName);
-        /*if (Get.isRegistered<SponsorPartnersController>()) {
+        if (Get.isRegistered<SponsorPartnersController>()) {
           SponsorPartnersController controller = Get.find();
           controller.allSponsorsPartnersListApi(requestBody: {
             "limited_mode": false,
           }, isRefresh: true);
         }
-        Get.toNamed(SponsorsList.routeName);*/
+        Get.toNamed(SponsorsList.routeName);
         break;
       case "sessions":
         dashboardController.changeTabIndex(1);

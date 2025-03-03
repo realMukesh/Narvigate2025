@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:dreamcast/routes/my_constant.dart';
 import 'package:dreamcast/utils/size_utils.dart';
@@ -101,11 +103,25 @@ class PreEventWidget extends GetView<HomeController> {
                                     ),
                                     GestureDetector(
                                         onTap: () {
-                                          var url = controller.configDetailBody
-                                                  .value.location?.url ??
-                                              "";
-                                          UiHelper.inAppBrowserView(
-                                              Uri.parse(url.toString()));
+                                          String url;
+
+                                          if (Platform.isIOS) {
+                                            url = controller.configDetailBody.value
+                                                .location?.iOSurl ??
+                                                "";
+                                          } else {
+                                            url = controller.configDetailBody.value
+                                                .location?.url ??
+                                                "";
+                                          }
+
+                                          if (url.isNotEmpty) {
+                                            UiHelper.inPlatformDefault(
+                                                Uri.parse(url));
+                                          } else {
+                                            UiHelper.showFailureMsg(context,
+                                                "Location unavailable. Please try again.");
+                                          }
                                         },
                                         child: SvgPicture.asset(
                                           ImageConstant.ic_location,

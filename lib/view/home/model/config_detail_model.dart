@@ -335,9 +335,10 @@ class Location {
   String? image;
   String? title;
   String? url;
+  String? iOSurl;
 
   Location(
-      {this.text, this.map, this.shortText, this.image, this.title, this.url});
+      {this.text, this.map, this.shortText, this.image, this.title, this.url, this.iOSurl});
 
   Location.fromJson(Map<String, dynamic> json) {
     text = json['text'];
@@ -346,6 +347,7 @@ class Location {
     image = json['image'];
     title = json['title'];
     url = json['url'];
+    iOSurl = json['ios_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -356,6 +358,7 @@ class Location {
     data['image'] = this.image;
     data['title'] = this.title;
     data['url'] = this.url;
+    data['ios_url'] = iOSurl;
     return data;
   }
 }

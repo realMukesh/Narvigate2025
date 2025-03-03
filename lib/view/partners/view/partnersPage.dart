@@ -52,27 +52,27 @@ class SponsorsList extends GetView<SponsorPartnersController> {
             padding:  const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             child: Column(
               children: [
-                CustomSearchView(
-                  isShowFilter: false,
-                  hintText: "search_here".tr,
-                  controller: textController.value,
-                  press: () async {},
-                  onSubmit: (result) async {
-                    if (result.isNotEmpty) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      controller.allSponsorsPartnersListApi(
-                          requestBody: {
-                            "limited_mode": false,
-                            "text": textController.value.text
-                          },
-                          isRefresh: true);
-                    }
-                  },
-                  onClear: (data) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    _refreshIndicatorKey.currentState?.show();
-                  },
-                ),
+                // CustomSearchView(
+                //   isShowFilter: false,
+                //   hintText: "search_here".tr,
+                //   controller: textController.value,
+                //   press: () async {},
+                //   onSubmit: (result) async {
+                //     if (result.isNotEmpty) {
+                //       FocusManager.instance.primaryFocus?.unfocus();
+                //       controller.allSponsorsPartnersListApi(
+                //           requestBody: {
+                //             "limited_mode": false,
+                //             "text": textController.value.text
+                //           },
+                //           isRefresh: true);
+                //     }
+                //   },
+                //   onClear: (data) {
+                //     FocusManager.instance.primaryFocus?.unfocus();
+                //     _refreshIndicatorKey.currentState?.show();
+                //   },
+                // ),
                 Expanded(
                   child: buildParentList(context),
                 ),

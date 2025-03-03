@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -81,10 +83,25 @@ class HomeLocationWidget extends GetView<HomeController> {
                             SizedBox(
                               child: GestureDetector(
                                   onTap: () {
-                                    UiHelper.inAppBrowserView(Uri.parse(
-                                        controller.configDetailBody.value
-                                                .location?.url ??
-                                            ""));
+                                    String url;
+
+                                    if (Platform.isIOS) {
+                                      url = controller.configDetailBody.value
+                                          .location?.iOSurl ??
+                                          "";
+                                    } else {
+                                      url = controller.configDetailBody.value
+                                          .location?.url ??
+                                          "";
+                                    }
+
+                                    if (url.isNotEmpty) {
+                                      UiHelper.inPlatformDefault(
+                                          Uri.parse(url));
+                                    } else {
+                                      UiHelper.showFailureMsg(context,
+                                          "Location unavailable. Please try again.");
+                                    }
                                   },
                                   child: Container(
                                       padding: const EdgeInsets.all(6),

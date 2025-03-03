@@ -27,7 +27,7 @@ class SplashScreen extends GetView<SplashController> {
               child: Stack(
                 children: [
                   CachedNetworkImage(
-                      imageUrl: AppUrl.splashDynamicImage,
+                      imageUrl: "https://eappsapi.vehub.live/narvigate_2025/api/cli/v1/event/splash",
                       imageBuilder: (context, imageProvider) => Container(
                             height: context.height,
                             width: context.width,
@@ -53,7 +53,7 @@ class SplashScreen extends GetView<SplashController> {
                       errorWidget: (context, url, error) => Container(
                             height: context.height,
                             width: context.width,
-                            color: Colors.black,
+                            color: Colors.white,
                           )
 
                       /*Image.asset(

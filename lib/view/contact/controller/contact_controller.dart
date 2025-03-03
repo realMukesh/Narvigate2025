@@ -210,7 +210,7 @@ class ContactController extends GetxController {
 
     // Get the directory to store the file
     Directory? directory = await getApplicationDocumentsDirectory();
-    String filePath = "${directory.path}/Dreamcast-event-contact.csv";
+    String filePath = "${directory.path}/Narvigate-2025.csv";
 
     // Write CSV data to the file
     File file = File(filePath);

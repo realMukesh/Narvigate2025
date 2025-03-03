@@ -23,8 +23,8 @@ class PhotoBoothController extends GetxController {
   late final AuthenticationManager _authManager;
   var loading = false.obs;
   final ImagePicker _picker = ImagePicker();
-  var photoList = <Gallery>[].obs;
-  var videoList = <Gallery>[].obs;
+  var photoList = [].obs;
+  var videoList = <String>[].obs;
   var totalPhotos = 0.obs;
   late bool hasNextPage;
   int pageNumber = 0;
@@ -57,7 +57,7 @@ class PhotoBoothController extends GetxController {
     super.onInit();
     _authManager = Get.find();
     user_id = _authManager.getUserId() ?? "";
-    getAllPhotos(body: {"page": "1", "type": "image"}, isRefresh: false);
+    getAllPhotos(body: {"page": "1"}, isRefresh: false);
     getAvailableCameras();
   }
 
@@ -114,7 +114,7 @@ class PhotoBoothController extends GetxController {
         isLoadMoreRunning(true);
         try {
           PhotoListModel? model = await apiService
-              .getAiPhotoList({"page": pageNumber, "type": "image"});
+              .getAiPhotoList({"page": pageNumber});
           if (model.status! && model.code == 200) {
             hasNextPage = model.body!.hasNextPage!;
             pageNumber = pageNumber + 1;
@@ -202,7 +202,7 @@ class PhotoBoothController extends GetxController {
     // tabIndex.value = index;
     if (index == 0) {
       // If on the Images tab, fetch images
-      getAllPhotos(body: {"page": 1, "type": "image"}, isRefresh: false);
+      getAllPhotos(body: {"page": 1}, isRefresh: false);
     } else if (index == 1) {
       // If on the Videos tab, fetch videos
       getAllVideo(body: {"page": 1, "type": "video"}, isRefresh: false);
@@ -245,7 +245,7 @@ class PhotoBoothController extends GetxController {
     CommonModel? loginResponseModel =
         await apiService.uploadImage(userId, imageFile.path.toString());
     loading(false);
-    getAllPhotos(body: {"page": "1", "type": "image"}, isRefresh: true);
+    getAllPhotos(body: {"page": "1"}, isRefresh: true);
   }
 
   getAvailableCameras() async {

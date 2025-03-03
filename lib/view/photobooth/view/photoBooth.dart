@@ -1,6 +1,7 @@
 import 'package:dreamcast/theme/app_colors.dart';
 import 'package:dreamcast/theme/ui_helper.dart';
 import 'package:dreamcast/utils/size_utils.dart';
+import 'package:dreamcast/widgets/button/custom_icon_button.dart';
 import 'package:dreamcast/widgets/customTextView.dart';
 import 'package:dreamcast/view/photobooth/controller/photobooth_controller.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: CustomAppBar(
@@ -55,28 +56,28 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
         ),
         body: Column(
           children: [
-            TabBar(
-              indicatorColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              labelStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-              unselectedLabelStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
-              onTap: (index) {
-                // Call the controller method to update the content based on the selected tab
-                controller.onTabChanged(index);
-              },
-              tabs: const [
-                Tab(text: 'Images'),
-                Tab(text: 'Videos'),
-              ],
-            ),
+            // TabBar(
+            //   indicatorColor: Colors.black,
+            //   indicatorSize: TabBarIndicatorSize.tab,
+            //   labelColor: Colors.black,
+            //   unselectedLabelColor: Colors.grey,
+            //   labelStyle: const TextStyle(
+            //     fontSize: 18,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            //   unselectedLabelStyle: const TextStyle(
+            //     fontSize: 18,
+            //     fontWeight: FontWeight.w400,
+            //   ),
+            //   onTap: (index) {
+            //     // Call the controller method to update the content based on the selected tab
+            //     controller.onTabChanged(index);
+            //   },
+            //   tabs: const [
+            //     Tab(text: 'Images'),
+            //     Tab(text: 'Videos'),
+            //   ],
+            // ),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -84,7 +85,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                   // Images Tab
                   buildImage(context),
                   // Videos Tab
-                  buildVideo(context),
+                  // buildVideo(context),
                 ],
               ),
             )
@@ -112,25 +113,26 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                               "Total ${controller.totalPhotos.value.toString()} Photos",
                           color: colorGray,
                           fontWeight: FontWeight.w600,
-                          fontSize: 22),
-                      // TextButton(
-                      //     onPressed: () async {
-                      //       if (controller.isMyPhotos.value) {
-                      //         await controller.getAllPhotos(
-                      //             body: {"page": 1, "type": "image"},
-                      //             isRefresh: false);
-                      //       } else {
-                      //         controller.showPicker(context, false);
-                      //       }
-                      //     },
-                      //     child: CustomTextView(
-                      //       text: controller.isMyPhotos.value
-                      //           ? "All Photos"
-                      //           : "upload_photo".tr,
-                      //       color: aiColor,
-                      //       fontSize: 18,
-                      //       fontWeight: FontWeight.normal,
-                      //     ))
+                          fontSize: 22,
+                      ),
+                      TextButton(
+                          onPressed: () async {
+                            if (controller.isMyPhotos.value) {
+                              await controller.getAllPhotos(
+                                  body: {"page": 1},
+                                  isRefresh: false);
+                            } else {
+                              controller.showPicker(context, false);
+                            }
+                          },
+                          child: CustomTextView(
+                            text: controller.isMyPhotos.value
+                                ? "All Photos"
+                                : "upload_photo".tr,
+                            color: aiColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                          )),
                     ],
                   ),
                 ),
@@ -148,7 +150,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                       const Duration(seconds: 1),
                       () async {
                         await controller.getAllPhotos(
-                          body: {"page": 1, "type": "image"},
+                          body: {"page": 1},
                           isRefresh: true,
                         );
                       },
@@ -160,13 +162,13 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                 controller.isLoadMoreRunning.value
                     ? const LoadMoreLoading()
                     : const SizedBox(),
-                const SizedBox(
-                  height: 12,
-                )
+                SizedBox(
+                  height: controller.isLoadMoreRunning.value ?  0 :12,
+                ),
               ],
             ),
             _progressEmptyWidget(),
-            /*controller.isAiSearchVisible.value &&
+            !controller.isLoadMoreRunning.value && controller.isAiSearchVisible.value &&
                     controller.photoList.isNotEmpty
                 ? Align(
                     alignment: Alignment.bottomCenter,
@@ -185,97 +187,11 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                       ),
                     ),
                   )
-                : const SizedBox(),*/
+                : const SizedBox(),
           ],
         ),
       );
     });
-  }
-
-  Widget buildVideo(BuildContext context) {
-    return GetX<PhotoBoothController>(builder: (controller) {
-      return Padding(
-        padding: const EdgeInsets.all(12),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Skeletonizer(
-                  enabled: controller.isFirstLoadVideoRunning.value,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTextView(
-                          text:
-                              "Total ${controller.totalPhotos.value.toString()} videos",
-                          color: colorGray,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22),
-                      // TextButton(
-                      //     onPressed: () async {
-                      //       if (controller.isMyVideo.value) {
-                      //         await controller.getAllPhotos(
-                      //             body: {"page": 1, "type": "video"},
-                      //             isRefresh: false);
-                      //       } else {
-                      //         controller.showPicker(context, false);
-                      //       }
-                      //     },
-                      //     child: CustomTextView(
-                      //       text: controller.isMyVideo.value
-                      //           ? "All Photos"
-                      //           : "upload_photo".tr,
-                      //       color: aiColor,
-                      //       fontSize: 18,
-                      //       fontWeight: FontWeight.normal,
-                      //     ))
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Expanded(
-                  child: RefreshIndicator(
-                    key: _refreshVideoIndicatorKey,
-                    onRefresh: () async {
-                      return Future.delayed(
-                        const Duration(seconds: 1),
-                        () async {
-                          await controller.getAllVideo(
-                            body: {"page": 1, "type": "video"},
-                            isRefresh: true,
-                          );
-                        },
-                      );
-                    },
-                    child: loadVideoListView(),
-                  ),
-                ),
-                controller.isLoadMoreVideoRunning.value
-                    ? const LoadMoreLoading()
-                    : const SizedBox(),
-                const SizedBox(
-                  height: 12,
-                )
-              ],
-            ),
-            _progressEmptyVideoWidget()
-          ],
-        ),
-      );
-    });
-  }
-
-  Widget _progressEmptyVideoWidget() {
-    return Center(
-      child: controller.loading.value
-          ? const Loading()
-          : !controller.isFirstLoadVideoRunning.value &&
-                  controller.videoList.isEmpty
-              ? ShowLoadingPage(refreshIndicatorKey: _refreshIndicatorKey)
-              : const SizedBox(),
-    );
   }
 
   Widget _progressEmptyWidget() {
@@ -291,7 +207,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
   ///main list view
   loadListView() {
     return Container(
-      // margin: const EdgeInsets.only(bottom: 40),
+      margin: const EdgeInsets.only(bottom: 44),
       child: Skeletonizer(
           enabled: controller.isFirstLoadRunning.value,
           child: controller.isFirstLoadRunning.value
@@ -302,7 +218,7 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
                   controller: controller.scrollController,
                   itemCount: controller.photoList.length,
                   itemBuilder: (context, index) {
-                    String data = controller.photoList[index].mediaFile ?? "";
+                    String data = controller.photoList[index] ?? "";
                     return Stack(
                       children: [
                         Align(
@@ -335,61 +251,147 @@ class AIPhotoSeachPage extends GetView<PhotoBoothController> {
     );
   }
 
-  ///main video list view
-  loadVideoListView() {
-    return Container(
-      // margin: const EdgeInsets.only(bottom: 40),
-      child: Skeletonizer(
-          enabled: controller.isFirstLoadVideoRunning.value,
-          child: controller.isFirstLoadVideoRunning.value
-              ? const PhotoListSkeleton()
-              : GridView.builder(
-                  //reverse: false,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: controller.scrollVideoController,
-                  itemCount: controller.videoList.length,
-                  itemBuilder: (context, index) {
-                    Gallery data = controller.videoList[index];
-                    return GestureDetector(
-                      onTap: () {
-                        String type = data.mediaType ?? "";
-                        String url = data.mediaLink ?? "";
+  // Widget buildVideo(BuildContext context) {
+  //   return GetX<PhotoBoothController>(builder: (controller) {
+  //     return Padding(
+  //       padding: const EdgeInsets.all(12),
+  //       child: Stack(
+  //         children: [
+  //           Column(
+  //             children: [
+  //               Skeletonizer(
+  //                 enabled: controller.isFirstLoadVideoRunning.value,
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     CustomTextView(
+  //                         text:
+  //                         "Total ${controller.totalPhotos.value.toString()} videos",
+  //                         color: colorGray,
+  //                         fontWeight: FontWeight.w600,
+  //                         fontSize: 22),
+  //                     // TextButton(
+  //                     //     onPressed: () async {
+  //                     //       if (controller.isMyVideo.value) {
+  //                     //         await controller.getAllPhotos(
+  //                     //             body: {"page": 1, "type": "video"},
+  //                     //             isRefresh: false);
+  //                     //       } else {
+  //                     //         controller.showPicker(context, false);
+  //                     //       }
+  //                     //     },
+  //                     //     child: CustomTextView(
+  //                     //       text: controller.isMyVideo.value
+  //                     //           ? "All Photos"
+  //                     //           : "upload_photo".tr,
+  //                     //       color: aiColor,
+  //                     //       fontSize: 18,
+  //                     //       fontWeight: FontWeight.normal,
+  //                     //     ))
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 height: 6,
+  //               ),
+  //               Expanded(
+  //                 child: RefreshIndicator(
+  //                   key: _refreshVideoIndicatorKey,
+  //                   onRefresh: () async {
+  //                     return Future.delayed(
+  //                       const Duration(seconds: 1),
+  //                           () async {
+  //                         await controller.getAllVideo(
+  //                           body: {"page": 1, "type": "video"},
+  //                           isRefresh: true,
+  //                         );
+  //                       },
+  //                     );
+  //                   },
+  //                   child: loadVideoListView(),
+  //                 ),
+  //               ),
+  //               controller.isLoadMoreVideoRunning.value
+  //                   ? const LoadMoreLoading()
+  //                   : const SizedBox(),
+  //               const SizedBox(
+  //                 height: 12,
+  //               )
+  //             ],
+  //           ),
+  //           _progressEmptyVideoWidget()
+  //         ],
+  //       ),
+  //     );
+  //   });
+  // }
 
-                        if (type.contains("youtube") == true ||
-                            type.contains("vimeo") == true ||
-                            type.contains("html5") == true) {
-                          UiHelper.inAppWebView(Uri.parse(url));
-                        } else {
-                          UiHelper.inAppBrowserView(Uri.parse(url));
-                        }
-                      },
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                              height: context.height,
-                              width: context.width,
-                              child: UiHelper.getPhotoBoothImage(
-                                  imageUrl: data.mediaFile ?? ""),
-                            ),
-                          ),
-                          const Icon(
-                            Icons.play_circle_filled,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1 / 1,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16),
-                )),
+  ///main video list view
+  // loadVideoListView() {
+  //   return Container(
+  //     // margin: const EdgeInsets.only(bottom: 40),
+  //     child: Skeletonizer(
+  //         enabled: controller.isFirstLoadVideoRunning.value,
+  //         child: controller.isFirstLoadVideoRunning.value
+  //             ? const PhotoListSkeleton()
+  //             : GridView.builder(
+  //                 //reverse: false,
+  //                 physics: const AlwaysScrollableScrollPhysics(),
+  //                 controller: controller.scrollVideoController,
+  //                 itemCount: controller.videoList.length,
+  //                 itemBuilder: (context, index) {
+  //                   Gallery data = controller.videoList[index];
+  //                   return GestureDetector(
+  //                     onTap: () {
+  //                       String type = data.mediaType ?? "";
+  //                       String url = data.mediaLink ?? "";
+  //
+  //                       if (type.contains("youtube") == true ||
+  //                           type.contains("vimeo") == true ||
+  //                           type.contains("html5") == true) {
+  //                         UiHelper.inAppWebView(Uri.parse(url));
+  //                       } else {
+  //                         UiHelper.inAppBrowserView(Uri.parse(url));
+  //                       }
+  //                     },
+  //                     child: Stack(
+  //                       alignment: Alignment.center,
+  //                       children: [
+  //                         Align(
+  //                           alignment: Alignment.center,
+  //                           child: SizedBox(
+  //                             height: context.height,
+  //                             width: context.width,
+  //                             child: UiHelper.getPhotoBoothImage(
+  //                                 imageUrl: data.mediaFile ?? ""),
+  //                           ),
+  //                         ),
+  //                         const Icon(
+  //                           Icons.play_circle_filled,
+  //                           color: Colors.white,
+  //                           size: 40,
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   );
+  //                 },
+  //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //                     crossAxisCount: 2,
+  //                     childAspectRatio: 1 / 1,
+  //                     mainAxisSpacing: 16,
+  //                     crossAxisSpacing: 16),
+  //               )),
+  //   );
+  // }
+
+  Widget _progressEmptyVideoWidget() {
+    return Center(
+      child: controller.loading.value
+          ? const Loading()
+          : !controller.isFirstLoadVideoRunning.value &&
+          controller.videoList.isEmpty
+          ? ShowLoadingPage(refreshIndicatorKey: _refreshIndicatorKey)
+          : const SizedBox(),
     );
   }
 
