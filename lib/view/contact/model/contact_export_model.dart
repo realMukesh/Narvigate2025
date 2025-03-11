@@ -153,6 +153,7 @@ class ExportContacts {
   String? name;
   String? company;
   String? position;
+  String? association;
   String? email;
   String? country;
   String? mobile;
@@ -166,6 +167,7 @@ class ExportContacts {
         this.name,
         this.company,
         this.position,
+        this.association,
         this.email,
         this.country,
         this.mobile,
@@ -179,6 +181,7 @@ class ExportContacts {
     name = json['name'];
     company = json['company'];
     position = json['position'];
+    association = json['association'];
     email = json['email'];
     country = json['country'];
     mobile = json['mobile'];
@@ -194,6 +197,7 @@ class ExportContacts {
     data['name'] = this.name;
     data['company'] = this.company;
     data['position'] = this.position;
+    data['association'] = this.association;
     data['email'] = this.email;
     data['country'] = this.country;
     data['mobile'] = this.mobile;

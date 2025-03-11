@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:dreamcast/view/contact/model/contact_export_model.dart';
@@ -197,11 +198,12 @@ class ContactController extends GetxController {
 
       List<dynamic> row = [];
       row.add(contacts.name ?? "");
-      row.add(contacts.email ?? "");
-      row.add(contacts.country ?? "");
-      row.add(contacts.mobile ?? "");
       row.add(contacts.company ?? "");
       row.add(contacts.position ?? "");
+      row.add(contacts.association ?? "");
+      row.add(contacts.email ?? "");
+      row.add(contacts.mobile ?? "");
+      row.add(contacts.type ?? "");
       row.add(contacts.note ?? "");
       rows.add(row);
     }

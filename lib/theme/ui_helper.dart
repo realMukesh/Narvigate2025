@@ -1009,4 +1009,14 @@ class UiHelper {
     final uri = Uri.tryParse(url ?? '');
     return uri != null && uri.hasAbsolutePath && (uri.isScheme('http') || uri.isScheme('https'));
   }
+
+  static Future<void> externalWebView(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+      webViewConfiguration: const WebViewConfiguration(enableDomStorage: false),
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
 }

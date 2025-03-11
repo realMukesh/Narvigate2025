@@ -3,6 +3,7 @@ import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/breifcase/controller/common_document_controller.dart';
 import 'package:dreamcast/view/breifcase/model/BriefcaseModel.dart';
 import 'package:dreamcast/view/home/controller/home_controller.dart';
+import 'package:dreamcast/widgets/customTextView.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -48,8 +49,8 @@ class HomeBannerWidget extends GetView<CommonDocumentController> {
                         itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) {
                           var banner = controller.bannerList[itemIndex];
-
                           return Container(
+                            height: 204.h,
                             width: context.width,
                             decoration: const BoxDecoration(
                                 borderRadius:
@@ -71,11 +72,16 @@ class HomeBannerWidget extends GetView<CommonDocumentController> {
                                         type?.contains("vimeo") == true ||
                                         type?.contains("html5") == true) {
                                       UiHelper.inAppWebView(Uri.parse(url));
+                                    } else if (type
+                                            ?.contains("external_link") ==
+                                        true) {
+                                      UiHelper.externalWebView(Uri.parse(url));
                                     } else {
                                       UiHelper.inAppBrowserView(Uri.parse(url));
                                     }
                                   },
                                   child: Container(
+                                    height: 204.h,
                                     margin: const EdgeInsets.only(bottom: 0),
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
@@ -93,6 +99,99 @@ class HomeBannerWidget extends GetView<CommonDocumentController> {
                                     ),
                                   ),
                                 ),
+                                // Play Button Overlay
+                                if (banner.media?.type?.contains("youtube") ==
+                                        true ||
+                                    banner.media?.type?.contains("vimeo") ==
+                                        true)
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        final media = banner.media;
+                                        if (media == null) return;
+                                        final type = media.type;
+                                        final url = media.url ?? "";
+                                        if (type?.contains("youtube") == true ||
+                                            type?.contains("vimeo") == true) {
+                                          UiHelper.inAppWebView(Uri.parse(url));
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.3),
+                                              // Shadow color
+                                              spreadRadius: 1,
+                                              // Spread radius
+                                              blurRadius: 3,
+                                              // Blur radius
+                                              offset: const Offset(
+                                                  0, 2), // Shadow position
+                                            ),
+                                          ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/icons/play-button.png",
+                                          height: 50,
+                                          scale: 2.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (banner.media?.type
+                                            ?.contains("in_app_link") ==
+                                        true ||
+                                    banner.media?.type
+                                            ?.contains("external_link") ==
+                                        true)
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        final media = banner.media;
+                                        if (media == null) return;
+                                        final type = media.type;
+                                        final url = media.url ?? "";
+                                        if (type?.contains("in_app_link") ==
+                                            true) {
+                                          UiHelper.inAppBrowserView(
+                                              Uri.parse(url));
+                                        } else {
+                                          UiHelper.externalWebView(
+                                              Uri.parse(url));
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.3),
+                                              // Shadow color
+                                              spreadRadius: 1,
+                                              // Spread radius
+                                              blurRadius: 3,
+                                              // Blur radius
+                                              offset: const Offset(
+                                                  0, 2), // Shadow position
+                                            ),
+                                          ],
+                                        ),
+                                        child: Image.asset(
+                                          "assets/icons/link.png",
+                                          height: 50,
+                                          scale: 2.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                           );
