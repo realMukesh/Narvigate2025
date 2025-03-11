@@ -48,9 +48,9 @@ class AccountController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     _authManager = Get.find();
     _dashboardController = Get.find();
-    super.onInit();
     callDefaultApi();
   }
 

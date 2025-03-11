@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dreamcast/theme/ui_helper.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/widgets/customTextView.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,6 @@ class _MyRankingPageState extends State<MyRankingPage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  var pointsList = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,37 +41,114 @@ class _MyRankingPageState extends State<MyRankingPage> {
             Container(
               child: controller.isFirstLoadRunning.value
                   ? const Center(child: Loading())
-                  : RefreshIndicator(
-                      key: _refreshIndicatorKey,
-                      color: Colors.white,
-                      backgroundColor: colorPrimary,
-                      strokeWidth: 2.0,
-                      triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                      onRefresh: () async {
-                        return Future.delayed(
-                          const Duration(seconds: 1),
-                          () {
-                            controller.getLeaderboard(isRefresh: true);
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        buildTopRankWidget(),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        buildLeaderboard(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                            child: RefreshIndicator(
+                          key: _refreshIndicatorKey,
+                          color: Colors.white,
+                          backgroundColor: colorPrimary,
+                          strokeWidth: 2.0,
+                          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                          onRefresh: () async {
+                            return Future.delayed(
+                              const Duration(seconds: 1),
+                              () {
+                                controller.getLeaderboard();
+                              },
+                            );
                           },
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          buildTopRankWidget(),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Expanded(child: buildListView(context))
-                        ],
-                      )),
+                          child: buildListView(context),
+                        )),
+                      ],
+                    ),
             ),
+            //_progressEmptyWidget()
           ],
         );
       }),
+    );
+  }
+
+  Widget _progressEmptyWidget() {
+    var pointsList = controller.leaderBoardData.value?.users ?? [];
+
+    return Center(
+      child: controller.loading.value
+          ? const Loading()
+          : !controller.isFirstLoadRunning.value && pointsList.isEmpty
+              ? ShowLoadingPage(refreshIndicatorKey: _refreshIndicatorKey)
+              : const SizedBox(),
+    );
+  }
+
+  buildLeaderboard() {
+    var myLeaderboard = controller.leaderBoardData.value.my?.user;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.only(top: 12, bottom: 12, left: 15),
+      decoration: BoxDecoration(
+          color: colorLightGray,
+          border: Border.all(color: colorLightGray, width: 1),
+          borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        children: [
+          Center(
+              child: CustomTextView(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            text: "#${myLeaderboard?.myRank ?? ""}",
+            color: colorPrimary,
+          )),
+          const SizedBox(
+            width: 10,
+          ),
+          avtarBuild(
+              shortName: myLeaderboard.shortName ?? "",
+              url: myLeaderboard.avatar ?? ""),
+          const SizedBox(
+            width: 10,
+          ),
+          const Expanded(
+              flex: 8,
+              child: CustomTextView(
+                text: "You",
+                fontSize: 18,
+                color: colorPrimary,
+                fontWeight: FontWeight.w500,
+                textAlign: TextAlign.start,
+              )),
+          Expanded(
+              flex: 2,
+              child: Container(
+                height: 45,
+                decoration: const BoxDecoration(
+                    color: colorLightGray,
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                child: Center(
+                  child: CustomTextView(
+                    color: colorPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    text: "${myLeaderboard?.point ?? ""}",
+                  ),
+                ),
+              ))
+        ],
+      ),
     );
   }
 
@@ -91,7 +167,8 @@ class _MyRankingPageState extends State<MyRankingPage> {
                 viewportFraction: 0.35,
                 autoPlayCurve: Curves.fastOutSlowIn,
                 scrollDirection: Axis.horizontal,
-                enableInfiniteScroll: true),
+                enableInfiniteScroll: true,
+            ),
             itemBuilder: (BuildContext context, int index, int realIndex) {
               return FittedBox(
                 child: Container(
@@ -186,35 +263,27 @@ class _MyRankingPageState extends State<MyRankingPage> {
   }
 
   Widget buildListView(BuildContext context) {
-    pointsList.clear();
-    pointsList.addAll(controller.leaderBoardData.value.users ?? []);
-    var myLeaderboard = controller.leaderBoardData.value.my?.user;
-    Users users = Users(
-        myRank: myLeaderboard.myRank ?? "",
-        name: "You",
-        shortName: myLeaderboard.shortName,
-        avatar: myLeaderboard.avatar,
-        point: myLeaderboard.point);
-    pointsList.insert(0, users);
-
+    var pointsList = controller.leaderBoardData.value.users ?? [];
+    print(pointsList.length);
     return Skeletonizer(
         enabled: controller.isFirstLoadRunning.value,
         child: ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          // padding: const EdgeInsets.symmetric(horizontal: 20),
           separatorBuilder: (BuildContext context, int index) {
-            return index == 0
-                ? const SizedBox()
-                : const Divider(
-                    height: 3,
-                  );
+            return SizedBox(
+              height: 0,
+              child: Container(
+                color: white,
+              ),
+            );
           },
           itemCount: pointsList.length,
           itemBuilder: (context, index) {
-            Users users = pointsList[0];
+            Users users = pointsList[index];
             return Container(
-              decoration: BoxDecoration(
-                  color: index == 0 ? colorLightGray : white,
-                  borderRadius: BorderRadius.circular(index == 0 ? 10 : 0)),
+              margin: const EdgeInsets.symmetric(horizontal: 15),
+              // padding: const EdgeInsets.symmetric(vertical: 12),
+              color: white,
               child: Column(
                 children: [
                   Padding(
@@ -224,19 +293,11 @@ class _MyRankingPageState extends State<MyRankingPage> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(
-                              width: 20,
-                              child: AutoSizeText(
-                                '#${users.myRank ?? ""}',
-                                maxFontSize: 20,
-                                minFontSize: 8,
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: colorSecondary,
-                                    fontFamily: MyConstant.currentFont),
-                                maxLines: 1,
-                              ),
+                            CustomTextView(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              text: '#${users.myRank ?? ""}',
+                              color: colorSecondary,
                             ),
                             const SizedBox(
                               width: 10,
@@ -257,8 +318,7 @@ class _MyRankingPageState extends State<MyRankingPage> {
                                 text: users.name ?? "",
                                 textAlign: TextAlign.start,
                                 fontWeight: FontWeight.w500,
-                                color:
-                                    index == 0 ? colorPrimary : colorSecondary,
+                                color: colorSecondary,
                                 fontSize: 18,
                               ),
                             ],
@@ -278,6 +338,7 @@ class _MyRankingPageState extends State<MyRankingPage> {
                       ],
                     ),
                   ),
+                  const Divider()
                 ],
               ),
             );
@@ -317,7 +378,7 @@ class _MyRankingPageState extends State<MyRankingPage> {
       width: size,
       decoration:
           const BoxDecoration(shape: BoxShape.circle, color: colorPrimaryDark),
-      child: url?.toString().isNotEmpty ?? false
+      child: UiHelper.isValidUrl(url ?? "")
           ? CachedNetworkImage(
               imageUrl: url,
               imageBuilder: (context, imageProvider) => Container(
@@ -347,6 +408,27 @@ class _MyRankingPageState extends State<MyRankingPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-    );
+    ); /*url.isNotEmpty
+        ? FittedBox(
+      fit: BoxFit
+          .fill, // the picture will acquire all of the parent space.
+      child: SizedBox(
+          height: size,
+          width: size,
+          child: CircleAvatar(backgroundImage: NetworkImage(url))),
+    )
+        : Container(
+      height: size,
+      width: size,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: lightGrayColor,
+      ),
+      child: Center(
+          child: BoldTextView(
+            text: shortName,
+            textAlign: TextAlign.center,
+          )),
+    );*/
   }
 }

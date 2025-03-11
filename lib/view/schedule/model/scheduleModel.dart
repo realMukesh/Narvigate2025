@@ -78,6 +78,8 @@ class SessionsData {
   List<Banners>? sessionBanner;
   dynamic keywords;
   dynamic isOnlineStream;
+  bool? isTicketBooking;
+  BookingMeeting? bookingMeeting;
 
   SessionsData(
       {this.id,
@@ -95,7 +97,10 @@ class SessionsData {
       this.auditorium,
       this.sessionBanner,
       this.keywords,
-      this.isOnlineStream});
+      this.isOnlineStream,
+      this.isTicketBooking,
+        this.bookingMeeting,
+      });
 
   SessionsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -108,7 +113,10 @@ class SessionsData {
     embedPlayer = json['embed_player'];
     thumbnail = json['thumbnail'];
     isOnlineStream = json['is_online_stream'];
-
+    isTicketBooking = json['is_ticket_booking'];
+    bookingMeeting = json['booking_meeting'] != null
+        ? new BookingMeeting.fromJson(json['booking_meeting'])
+        : null;
     if (json['status'] != null && json['status'] is int) {
       status = json['status'];
     } else {
@@ -153,6 +161,10 @@ class SessionsData {
     data['thumbnail'] = thumbnail;
     data['keywords'] = keywords;
     data['is_online_stream'] = isOnlineStream;
+    data['is_ticket_booking'] = isTicketBooking;
+    if (this.bookingMeeting != null) {
+      data['booking_meeting'] = this.bookingMeeting!.toJson();
+    }
     if (speakers != null) {
       data['speakers'] = speakers!.map((v) => v.toJson()).toList();
     }
@@ -165,6 +177,47 @@ class SessionsData {
     if (this.auditorium != null) {
       data['auditorium'] = this.auditorium!.toJson();
     }
+    return data;
+  }
+}
+
+class BookingMeeting {
+  bool? userStatus;
+  String? totalSlots;
+  String? bookASeat;
+  String? seatBooked;
+  String? confirmationMessage;
+  String? slotsMessage;
+  bool? slotsAvailable;
+
+  BookingMeeting(
+      {this.userStatus,
+        this.totalSlots,
+        this.bookASeat,
+        this.seatBooked,
+        this.confirmationMessage,
+        this.slotsMessage,
+        this.slotsAvailable});
+
+  BookingMeeting.fromJson(Map<String, dynamic> json) {
+    userStatus = json['user_status'];
+    bookASeat = json['book_a_seat'];
+    seatBooked = json['seat_booked'];
+    confirmationMessage = json['confirmation_message'];
+    totalSlots = json['total_slots'];
+    slotsMessage = json['slots_message'];
+    slotsAvailable = json['slots_available'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_status'] = this.userStatus;
+    data['total_slots'] = this.totalSlots;
+    data['book_a_seat'] = this.bookASeat;
+    data['seat_booked'] = this.seatBooked;
+    data['confirmation_message'] = this.confirmationMessage;
+    data['slots_message'] = this.slotsMessage;
+    data['slots_available'] = this.slotsAvailable;
     return data;
   }
 }

@@ -109,7 +109,6 @@ class InputFormFieldMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("sam ${isMobile}");
     return TextFormField(
       enableSuggestions: false,
       autocorrect: false,

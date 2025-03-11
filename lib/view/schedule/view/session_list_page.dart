@@ -3,6 +3,7 @@ import 'package:dreamcast/utils/image_constant.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/beforeLogin/globalController/authentication_manager.dart';
 import 'package:dreamcast/view/skeletonView/sessionSkeletonList.dart';
+import 'package:dreamcast/widgets/loadMoreItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -83,7 +84,10 @@ class SessionListPage extends GetView<SessionController> {
                       },
                       child: buildListView(context),
                     ),
-                  )
+                  ),
+                  controller.isLoadMoreRunning.value
+                      ? const LoadMoreLoading()
+                      : const SizedBox()
                 ],
               ),
               _progressEmptyWidget(),
@@ -108,6 +112,7 @@ class SessionListPage extends GetView<SessionController> {
       child: controller.isFirstLoading.value
           ? const SessionListSkeleton()
           : ListView.separated(
+              controller: controller.scrollController,
               separatorBuilder: (BuildContext context, int index) {
                 return const SizedBox(
                   height: 0,

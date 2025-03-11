@@ -10,7 +10,7 @@ class AppUrl {
   ///firebase database url dynamic updater from splash controller
   static String setDataBaseUrl =
       "https://cto-talks-webapp-default-rtdb.asia-southeast1.firebasedatabase.app";
-  static String setDefaultFirebaseNode = "eappnarvigate2025local";
+  static String setDefaultFirebaseNode = "eappnarvigate2025prod";
   static String setTopicName = "EVENTAPP_NARVIGATE_2024";
 
   static String get dataBaseUrl => setDataBaseUrl;
@@ -19,11 +19,11 @@ class AppUrl {
 
   /****************dynamic base url updated from the auth manager*****/
 
-  static String baseURLV1 =
-      'https://eappsapi.vehub.live/narvigate_2025/api/v1'; // production
-
   // static String baseURLV1 =
-  //     'https://live.dreamcast.in/narvigate_2025/api/v1';   /// staging url
+  //     'https://eappsapi.vehub.live/narvigate_2025/api/v1'; // production
+
+  static String baseURLV1 =
+      'https://live.dreamcast.in/narvigate_2025/api/v1';   /// staging url
 
 
   /* static String baseURLV1 =
@@ -264,6 +264,8 @@ class AppUrl {
 
   /*session detail by session id*/
   static String get getSessionDetail => '$baseURLV1/webinars/get';
+
+  static String get seatBooking => '$baseURLV1/webinars/seatBooking';
 
   static String get saveAngelAlly => '$baseURLV1/angelAlly/save';
 

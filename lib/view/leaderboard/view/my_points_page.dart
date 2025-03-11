@@ -44,7 +44,7 @@ class MyPointsPage extends GetView<LeaderboardController> {
                               return Future.delayed(
                                 const Duration(seconds: 1),
                                 () {
-                                  controller.getLeaderboard(isRefresh: true);
+                                  controller.getLeaderboard();
                                 },
                               );
                             },

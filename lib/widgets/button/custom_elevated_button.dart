@@ -100,6 +100,7 @@ class CommonMenuButton extends StatelessWidget {
         elevation: 0.3,
         color: color,
         hoverColor: colorSecondary,
+        padding: EdgeInsets.symmetric(horizontal: 4.v),
         //animationDuration: const Duration(seconds: 1),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),

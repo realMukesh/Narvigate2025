@@ -12,6 +12,7 @@ import 'package:dreamcast/view/beforeLogin/signup/model/state_res_model.dart';
 import 'package:dreamcast/view/eventFeed/model/postLikeModel.dart';
 import 'package:dreamcast/view/gallery/model/galleryModel.dart';
 import 'package:dreamcast/view/guide/model/dodont_model.dart';
+import 'package:dreamcast/view/leaderboard/model/leaderboard_model.dart';
 import 'package:dreamcast/view/menu/model/menu_data_model.dart';
 import 'package:dreamcast/view/menu/model/shiftingModel.dart';
 import 'package:dreamcast/view/myFavourites/model/bookmark_exhibitor_model.dart';
@@ -194,6 +195,7 @@ class ApiService extends GetxService {
             await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
                 .get(Uri.parse(AppUrl.getConfig), headers: cphiHeaders)
                 .timeout(const Duration(seconds: 60));
+        log("somen ${response.body}");
         return ConfigModel.fromJson(json.decode(response.body));
       }
     } catch (e) {
@@ -1948,6 +1950,23 @@ class ApiService extends GetxService {
     }
   }
 
+  Future<CommonModel> seatBook(dynamic body) async {
+    try {
+      final response =
+          await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
+              .post(Uri.parse(AppUrl.seatBooking),
+                  headers: getHeaders(), body: jsonEncode(body))
+              .timeout(const Duration(seconds: 30));
+      if (CommonModel.fromJson(json.decode(response.body)).code == 440) {
+        tokenExpire();
+      }
+      return CommonModel.fromJson(json.decode(response.body));
+    } catch (e) {
+      checkException(e);
+      rethrow;
+    }
+  }
+
   Future<SessionDetailModel> getSessionDetail(dynamic body) async {
     Logger.log(body);
     Logger.log(AppUrl.getSessionDetail);
@@ -1957,6 +1976,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(AppUrl.getSessionDetail),
                   headers: getHeaders(), body: jsonEncode(body))
               .timeout(const Duration(seconds: 30));
+      log("getSessionDetail ${response.body}");
       if (SessionDetailModel.fromJson(json.decode(response.body)).code == 440) {
         tokenExpire();
       }
@@ -2571,6 +2591,24 @@ class ApiService extends GetxService {
       rethrow;
     }
   }
+
+  Future<LeaderBoardModel> getLeaderboard({body}) async {
+    try {
+      final response =
+      await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
+          .post(Uri.parse(AppUrl.leaderBoardApi),body: jsonEncode(body), headers: getHeaders())
+          .timeout(const Duration(seconds: 20));
+      if (LeaderBoardModel.fromJson(json.decode(response.body)).code ==
+          440) {
+        tokenExpire();
+      }
+      return LeaderBoardModel.fromJson(json.decode(response.body));
+    } catch (e) {
+      checkException(e);
+      rethrow;
+    }
+  }
+
 }
 
 class ApiResponse<T> {

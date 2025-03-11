@@ -7,6 +7,7 @@ import 'package:dreamcast/view/breifcase/controller/common_document_controller.d
 import 'package:dreamcast/view/exhibitors/controller/exhibitorsController.dart';
 import 'package:dreamcast/view/myFavourites/controller/favourite_controller.dart';
 import 'package:dreamcast/view/schedule/model/sessin_detail_model.dart';
+import 'package:dreamcast/widgets/dialog/custom_animated_dialog_widget.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -263,6 +264,7 @@ class SessionController extends GetxController
     _pageNumber = 1;
     hasNextPage = false;
     isFirstLoading(!isRefresh);
+    loading(isRefresh);
     ScheduleModel? model =
         await apiService.getSessionList(sessionRequestModel, AppUrl.getSession);
     if (model.status == true && model.code == 200) {
@@ -283,6 +285,7 @@ class SessionController extends GetxController
       print(model.code.toString());
     }
     isFirstLoading(false);
+    loading(false);
   }
 
   ///get more session data
@@ -340,6 +343,61 @@ class SessionController extends GetxController
     } else {
       print(model.code.toString());
     }
+  }
+
+  ///book a seat by id
+  Future<Map> seatBooking({required BookingMeeting bookingMeeting, required requestBody}) async {
+    var result = {};
+    loading(true);
+
+    if(Get.isRegistered<SpeakersDetailController>()) {
+      Get.find<SpeakersDetailController>().isLoading(true);
+    }
+
+    CommonModel? model = await apiService.seatBook(requestBody);
+    loading(false);
+    if (model.status! && model.code == 200) {
+      result = {"status": model.status, "message": ""};
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return CustomAnimatedDialogWidget(
+            title: "Success!",
+            logo: ImageConstant.icSuccessAnimated,
+            description: model.message ?? "Seat Booked successfully",
+            buttonAction: "okay".tr,
+            buttonCancel: "cancel".tr,
+            isHideCancelBtn: true,
+            onCancelTap: () {},
+            onActionTap: () async {},
+          );
+        },
+      );
+      // UiHelper.showSuccessMsg(null, model.message ?? "Seat Booked successfully");
+
+      bookingMeeting.userStatus = true;
+
+      if(Get.isRegistered<SpeakersDetailController>()) {
+        if(sessionList.isNotEmpty) {
+          var index = sessionList.indexWhere((value) =>
+          value.id == requestBody['webinar_id'].toString());
+          sessionList[index].bookingMeeting = bookingMeeting;
+          sessionList.refresh();
+        }
+      }
+
+      update();
+
+    } else {
+      result = {"status": false};
+      UiHelper.showFailureMsg(null, model.message ?? "Session is Already Booked");
+    }
+
+    if(Get.isRegistered<SpeakersDetailController>()) {
+      Get.find<SpeakersDetailController>().isLoading(false);
+    }
+    getSessionBanner();
+    return result;
   }
 
   ///get the session details by id

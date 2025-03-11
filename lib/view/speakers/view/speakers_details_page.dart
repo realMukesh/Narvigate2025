@@ -178,7 +178,7 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
                               imageUrl: personalObject.avatar ?? "",
                               shortName: personalObject.shortName ?? "",
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

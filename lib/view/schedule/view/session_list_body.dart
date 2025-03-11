@@ -8,6 +8,7 @@ import 'package:dreamcast/view/schedule/controller/session_controller.dart';
 import 'package:dreamcast/view/schedule/view/watch_session_page.dart';
 import 'package:dreamcast/view/speakers/controller/speakersController.dart';
 import 'package:dreamcast/view/startNetworking/view/pitchStage/pitchStage_controller.dart';
+import 'package:dreamcast/widgets/dialog/custom_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -78,32 +79,32 @@ class SessionListBody extends GetView<SessionController> {
                         () => Stack(
                           alignment: Alignment.center,
                           children: [
-                            if(!(isFromGlobalSearch ?? false))
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                session.isLoading(true);
-                                await controller.bookmarkToSession(
-                                  id: session.id,
-                                );
-                                session.isLoading(false);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 5.0),
-                                child: SvgPicture.asset(
-                                  height: 18.adaptSize,
-                                  width: 14.adaptSize,
-                                  isFromBookmark
-                                      ? ImageConstant.bookmarkIcon
-                                      : controller.bookMarkIdsList
-                                              .contains(session.id)
-                                          ? ImageConstant.bookmarkIcon
-                                          : ImageConstant.unBookmarkIcon,
+                            if (!(isFromGlobalSearch ?? false))
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  session.isLoading(true);
+                                  await controller.bookmarkToSession(
+                                    id: session.id,
+                                  );
+                                  session.isLoading(false);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 5.0),
+                                  child: SvgPicture.asset(
+                                    height: 18.adaptSize,
+                                    width: 14.adaptSize,
+                                    isFromBookmark
+                                        ? ImageConstant.bookmarkIcon
+                                        : controller.bookMarkIdsList
+                                                .contains(session.id)
+                                            ? ImageConstant.bookmarkIcon
+                                            : ImageConstant.unBookmarkIcon,
+                                  ),
                                 ),
                               ),
-                            ),
                             session.isLoading.value
                                 ? const FavLoading()
                                 : const SizedBox()
@@ -268,8 +269,8 @@ class SessionListBody extends GetView<SessionController> {
                                       onTap: () async {
                                         if (Get.isRegistered<
                                             SpeakersDetailController>()) {
-                                          SpeakersDetailController speakerController =
-                                              Get.find();
+                                          SpeakersDetailController
+                                              speakerController = Get.find();
                                           controller.loading(true);
                                           await speakerController
                                               .getSpeakerDetail(
@@ -286,7 +287,8 @@ class SessionListBody extends GetView<SessionController> {
                                         shortName:
                                             session.speakers![i].shortName ??
                                                 "",
-                                        size: 34.adaptSize,borderWidth: 0,
+                                        size: 34.adaptSize,
+                                        borderWidth: 0,
                                       ),
                                     )
                                   : InkWell(
@@ -315,7 +317,7 @@ class SessionListBody extends GetView<SessionController> {
                   width: 34.adaptSize,
                 ),
           // Optionally, you can add more widgets here
-          arrowWidget(),
+          arrowWidget(context),
         ],
       ),
     );
@@ -355,7 +357,7 @@ class SessionListBody extends GetView<SessionController> {
         : const SizedBox();
   }
 
-  Widget arrowWidget() {
+  Widget arrowWidget(BuildContext context) {
     return Row(
       children: [
         session.isOnlineStream != null && session.isOnlineStream == 1
@@ -399,46 +401,163 @@ class SessionListBody extends GetView<SessionController> {
               ? 8
               : 0,
         ),
-        session.status?.value==0?GestureDetector(
-          onTap: () {
-            Add2Calendar.addEvent2Cal(
-              controller.buildEvent(sessions: session),
-            );
-          },
-          child: Container(
-            height: 34.adaptSize,
-            // width: 34.adaptSize,
-            padding: EdgeInsets.symmetric(
-              horizontal: 12.adaptSize,
-              vertical: 6.adaptSize,
-            ),
-            decoration: BoxDecoration(
-              color: colorLightGray,
-              borderRadius: BorderRadius.all(Radius.circular(5.adaptSize)),
-            ),
-            // child: SvgPicture.asset("assets/svg/ic_add_event.svg"),
-            child: Center(
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    ImageConstant.ic_add_event,
-                    height: 20.adaptSize,
-                    width: 19.adaptSize,
+        // add to calender
+        session.status?.value == 0
+            ? GestureDetector(
+                onTap: () {
+                  Add2Calendar.addEvent2Cal(
+                    controller.buildEvent(sessions: session),
+                  );
+                },
+                child: Container(
+                  height: 34.adaptSize,
+                  // width: 34.adaptSize,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.adaptSize,
+                    vertical: 6.adaptSize,
                   ),
-                  const SizedBox(width: 5),
-                  CustomTextView(
-                    text: "Add",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ):const SizedBox(),
+                  decoration: BoxDecoration(
+                    color: colorLightGray,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(5.adaptSize)),
+                  ),
+                  // child: SvgPicture.asset("assets/svg/ic_add_event.svg"),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          ImageConstant.ic_add_event,
+                          height: 20.adaptSize,
+                          width: 19.adaptSize,
+                        ),
+                        const SizedBox(width: 5),
+                        const CustomTextView(
+                          text: "Add",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox(),
+
+        // book seat for session
+        if (session.isTicketBooking ?? false)
+          session.bookingMeeting?.userStatus ?? false
+              ? Container(
+                  height: 34.adaptSize,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.adaptSize,
+                    vertical: 6.adaptSize,
+                  ),
+                  margin: EdgeInsets.only(
+                    left: 12.v,
+                  ),
+                  decoration: BoxDecoration(
+                      color: white,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(5.adaptSize)),
+                      border: Border.all(
+                        color: colorPrimary,
+                      )),
+                  // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
+                  child: Center(
+                    child: CustomTextView(
+                      text: session.bookingMeeting?.seatBooked ?? "Booked",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: colorPrimary,
+                    ),
+                  ),
+                )
+              : (session.bookingMeeting?.slotsAvailable ?? false)
+                  ? GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomDialogWidget(
+                              title: "Confirmation",
+                              logo: '',
+                              description: session
+                                      .bookingMeeting?.confirmationMessage ??
+                                  "Are you sure you want to book this seat?",
+                              buttonAction: "Yes",
+                              buttonCancel: "No",
+                              onCancelTap: () {},
+                              onActionTap: () async {
+                                controller.seatBooking(
+                                  bookingMeeting: session.bookingMeeting ??
+                                      BookingMeeting(),
+                                  requestBody: {
+                                    "webinar_id": session.id,
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 34.adaptSize,
+                        // width: 34.adaptSize,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.adaptSize,
+                          vertical: 6.adaptSize,
+                        ),
+                        margin: EdgeInsets.only(
+                          left: 12.v,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorPrimary,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(5.adaptSize)),
+                        ),
+                        // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
+                        child: Center(
+                          child: CustomTextView(
+                            text: session.bookingMeeting?.bookASeat ??
+                                "Book A Seat",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: white,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: 34.adaptSize,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.adaptSize,
+                        vertical: 6.adaptSize,
+                      ),
+                      margin: EdgeInsets.only(
+                        left: 12.v,
+                      ),
+                      decoration: BoxDecoration(
+                          color: white,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(5.adaptSize)),
+                          border: Border.all(
+                            color: colorPrimary,
+                          )),
+                      // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
+                      child: Center(
+                        child: CustomTextView(
+                          text: session.bookingMeeting?.slotsMessage ??
+                              "Not Available",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: colorPrimary,
+                        ),
+                      ),
+                    ),
       ],
     );
   }
+
   watchSessionPage(bool streaming) async {
     var result =
         await controller.getSessionDetail(requestBody: {"id": session.id});
@@ -452,16 +571,22 @@ class SessionListBody extends GetView<SessionController> {
       if (Get.isRegistered<SpeakersDetailController>()) {
         print("hell000000");
         SpeakersDetailController speakerController = Get.find();
-        if(controller.sessionDetailBody.speakers !=null && controller.sessionDetailBody.speakers!.isNotEmpty){
-          speakerController.userIdsList = controller.sessionDetailBody.speakers!.map((obj) => obj.id).toList();
-          await  speakerController.getBookmarkAndRecommendedByIds();
+        if (controller.sessionDetailBody.speakers != null &&
+            controller.sessionDetailBody.speakers!.isNotEmpty) {
+          speakerController.userIdsList = controller.sessionDetailBody.speakers!
+              .map((obj) => obj.id)
+              .toList();
+          await speakerController.getBookmarkAndRecommendedByIds();
         }
       } else {
         print("hell000");
         final speakerController = Get.put(SpeakersDetailController());
-        if(controller.sessionDetailBody.speakers !=null && controller.sessionDetailBody.speakers!.isNotEmpty){
-          speakerController.userIdsList = controller.sessionDetailBody.speakers!.map((obj) => obj.id).toList();
-          await  speakerController.getBookmarkAndRecommendedByIds();
+        if (controller.sessionDetailBody.speakers != null &&
+            controller.sessionDetailBody.speakers!.isNotEmpty) {
+          speakerController.userIdsList = controller.sessionDetailBody.speakers!
+              .map((obj) => obj.id)
+              .toList();
+          await speakerController.getBookmarkAndRecommendedByIds();
         }
       }
       Get.to(() => WatchDetailPage(
@@ -748,8 +873,8 @@ class PitchStageBody extends GetView<PitchStageController> {
                                   onTap: () async {
                                     if (Get.isRegistered<
                                         SpeakersDetailController>()) {
-                                      SpeakersDetailController speakerController =
-                                          Get.find();
+                                      SpeakersDetailController
+                                          speakerController = Get.find();
                                       controller.loading(true);
                                       await speakerController.getSpeakerDetail(
                                           speakerId: session.speakers![i].id,
@@ -883,7 +1008,7 @@ class PitchStageBody extends GetView<PitchStageController> {
         ),
         GestureDetector(
           onTap: () {
-              controller.openSessionDetail(sessionId: session.id);
+            controller.openSessionDetail(sessionId: session.id);
           },
           child: Container(
             height: 34.adaptSize,

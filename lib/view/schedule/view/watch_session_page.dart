@@ -4,6 +4,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:dreamcast/utils/size_utils.dart';
 import 'package:dreamcast/view/polls/controller/pollsController.dart';
 import 'package:dreamcast/view/schedule/widget/common_track_list_widget.dart';
+import 'package:dreamcast/widgets/dialog/custom_dialog_widget.dart';
 import 'package:dreamcast/widgets/loading.dart';
 import 'package:dreamcast/view/schedule/controller/session_controller.dart';
 import 'package:dreamcast/view/speakers/view/speakerListBody.dart';
@@ -38,6 +39,7 @@ import '../widget/session_status_widget.dart';
 class WatchDetailPage extends GetView<SessionController> {
   final DashboardController dashboardController = Get.find();
   SessionsData sessions;
+
   WatchDetailPage({Key? key, required this.sessions}) : super(key: key);
   static const routeName = "/ScheduleDetailPage";
 
@@ -143,6 +145,105 @@ class WatchDetailPage extends GetView<SessionController> {
                         ),
                       ),
                     ),
+                    (sessions.isTicketBooking ?? false)
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.v, vertical: 20.h),
+                            child: sessions.bookingMeeting?.userStatus ?? false
+                                ? CustomIconButton(
+                                    height: 56.h,
+                                    decoration: BoxDecoration(
+                                      // color: colorPrimary,
+                                      border: Border.all(color: colorPrimary),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    width: context.width,
+                                    child: Center(
+                                      child: CustomTextView(
+                                        text: sessions
+                                                .bookingMeeting?.seatBooked ??
+                                            "Booked",
+                                        fontSize: 16,
+                                        maxLines: 1,
+                                        fontWeight: FontWeight.w500,
+                                        color: colorPrimary,
+                                      ),
+                                    ),
+                                  )
+                                : sessions.bookingMeeting?.slotsAvailable ??
+                                        false
+                                    ? CustomIconButton(
+                                        height: 56.h,
+                                        decoration: BoxDecoration(
+                                          color: colorPrimary,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        width: context.width,
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return CustomDialogWidget(
+                                                  title: "Confirmation",
+                                                  logo: '',
+                                                  description: sessions
+                                                          .bookingMeeting
+                                                          ?.confirmationMessage ??
+                                                      "Are you sure you want to book this seat?",
+                                                  buttonAction: "Yes",
+                                                  buttonCancel: "No",
+                                                  onCancelTap: () {},
+                                                  onActionTap: () async {
+                                                    controller.seatBooking(
+                                                      bookingMeeting: sessions
+                                                              .bookingMeeting ??
+                                                          BookingMeeting(),
+                                                      requestBody: {
+                                                        "webinar_id":
+                                                            sessions.id,
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              });
+                                        },
+                                        child: Center(
+                                          child: CustomTextView(
+                                            text: sessions.bookingMeeting
+                                                    ?.bookASeat ??
+                                                "Book A Seat",
+                                            fontSize: 16,
+                                            maxLines: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: white,
+                                          ),
+                                        ),
+                                      )
+                                    : CustomIconButton(
+                                        height: 56.h,
+                                        decoration: BoxDecoration(
+                                          // color: colorPrimary,
+                                          border:
+                                              Border.all(color: colorPrimary),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        width: context.width,
+                                        child: Center(
+                                          child: CustomTextView(
+                                            text: sessions.bookingMeeting
+                                                    ?.slotsMessage ??
+                                                "Not Available",
+                                            fontSize: 16,
+                                            maxLines: 1,
+                                            fontWeight: FontWeight.w500,
+                                            color: colorPrimary,
+                                          ),
+                                        ),
+                                      ),
+                          )
+                        : const SizedBox(),
                     controller.mSessionDetailBody.value.isOnlineStream == 1 &&
                             controller.isStreaming.value == false
                         ? Padding(
@@ -347,8 +448,8 @@ class WatchDetailPage extends GetView<SessionController> {
               ),
               Flexible(
                 child: CustomTextView(
-                  text:
-                      controller.mSessionDetailBody.value.auditorium?.text ?? "",
+                  text: controller.mSessionDetailBody.value.auditorium?.text ??
+                      "",
                   color: colorGray,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
@@ -370,7 +471,7 @@ class WatchDetailPage extends GetView<SessionController> {
             height: 6,
           ),
           CustomReadMoreText(
-            text: 'controller.sessionDetailBody.description ?? ""\nsfiwngfnwregwerg\nerwgdrgdgdfg\nsdfsgsag\nafgsagfafs\nafsgasg\nasdgasg\nadfssaf\nasdfasd\n\nn\\nn\n\nesagawrgar',
+            text: controller.sessionDetailBody.description ?? "",
             textAlign: TextAlign.start,
             fontSize: 14,
             color: colorSecondary,

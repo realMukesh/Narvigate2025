@@ -23,7 +23,7 @@ class LeaderboardDashboardPage extends StatefulWidget {
 class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
     with SingleTickerProviderStateMixin {
   var tabList = ["Leaderboard", "Criteria", "My Points"];
-  final LeaderboardController leaderboardController = Get.find();
+  final leaderboardController = Get.put(LeaderboardController());
   int tabIndex = 0;
 
   @override
@@ -35,6 +35,7 @@ class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
         leadingWidth: 45.h,
         leading: AppbarLeadingImage(
           imagePath: ImageConstant.imgArrowLeft,
+
           margin: EdgeInsets.only(
             left: 7.h,
             top: 3,
@@ -44,7 +45,7 @@ class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
             Get.back();
           },
         ),
-        title: ToolbarTitle(title: "Leaderboard".tr),
+        title: const ToolbarTitle(title: "Leaderboard"),
       ),
       body: DefaultTabController(
         length: tabList.length,
@@ -57,47 +58,50 @@ class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
             indicatorColor: Colors.transparent,
             tabAlignment: TabAlignment.center,
             indicatorSize: TabBarIndicatorSize.tab,
+            //labelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.h),
+            //labelColor: colorSecondary,
             unselectedLabelStyle: TextStyle(
                 fontSize: 22.fSize,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 color: colorGray),
             labelStyle: TextStyle(
                 fontSize: 22.fSize,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 color: colorSecondary),
+            //indicatorColor: colorSecondary,
             onTap: (index) {
               leaderboardController.tabController.index = index;
               leaderboardController.selectedTabIndex(index);
-              leaderboardController.getLeaderboard(isRefresh: true);
+              leaderboardController.getLeaderboard();
             },
             tabs: <Widget>[
               ...List.generate(
                 tabList.length,
-                (index) => Obx(
-                  () => Tab(
-                    child: Text(
-                      tabList[index],
-                      style: TextStyle(
-                          color: leaderboardController.selectedTabIndex.value ==
-                                  index
-                              ? colorPrimary
-                              : colorGray,
-                      ),
-                    ),
-                  ),
-                ),
+                    (index) =>
+                    Obx(() =>
+                        Tab(
+                          child: Text(
+                            tabList[index],
+                            style: TextStyle(
+                                color: leaderboardController.selectedTabIndex
+
+                                    .value == index
+                                    ? colorPrimary
+                                    : colorGray),
+                          ),
+                        ),),
               ),
             ],
           ),
           body: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                  child: TabBarView(
+              //const Divider(height: 1,color: indicatorColor,),
+              Expanded(child: TabBarView(
                 controller: leaderboardController.tabController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  const MyRankingPage(),
+                  const MyRankingPage(), //MyRankingPage(),
                   CriteriasPage(),
                   MyPointsPage(),
                 ],
@@ -108,4 +112,5 @@ class _LeaderboardDashboardPage extends State<LeaderboardDashboardPage>
       ),
     );
   }
+
 }
