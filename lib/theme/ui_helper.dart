@@ -969,7 +969,7 @@ class UiHelper {
 
   static bool isValidTwitterUrl(String url) {
     final RegExp regex = RegExp(
-      r'^https?:\/\/(www\.)?twitter\.com\/[A-Za-z0-9_]{1,15}\/?$',
+      r'^https?:\/\/(www\.)?x\.com\/[A-Za-z0-9_]+(\/|\?.*)?$',
     );
     return regex.hasMatch(url);
   }

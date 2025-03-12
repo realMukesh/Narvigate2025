@@ -472,88 +472,90 @@ class SessionListBody extends GetView<SessionController> {
                     ),
                   ),
                 )
-              : (session.bookingMeeting?.slotsAvailable ?? false)
-                  ? GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomDialogWidget(
-                              title: "Confirmation",
-                              logo: '',
-                              description: session
-                                      .bookingMeeting?.confirmationMessage ??
-                                  "Are you sure you want to book this seat?",
-                              buttonAction: "Yes",
-                              buttonCancel: "No",
-                              onCancelTap: () {},
-                              onActionTap: () async {
-                                controller.seatBooking(
-                                  bookingMeeting: session.bookingMeeting ??
-                                      BookingMeeting(),
-                                  requestBody: {
-                                    "webinar_id": session.id,
+              : session.status?.value == 0
+                  ? (session.bookingMeeting?.slotsAvailable ?? false)
+                      ? GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomDialogWidget(
+                                  title: "Confirmation",
+                                  logo: '',
+                                  description: session.bookingMeeting
+                                          ?.confirmationMessage ??
+                                      "Are you sure you want to book this seat?",
+                                  buttonAction: "Yes",
+                                  buttonCancel: "No",
+                                  onCancelTap: () {},
+                                  onActionTap: () async {
+                                    controller.seatBooking(
+                                      bookingMeeting: session.bookingMeeting ??
+                                          BookingMeeting(),
+                                      requestBody: {
+                                        "webinar_id": session.id,
+                                      },
+                                    );
                                   },
                                 );
                               },
                             );
                           },
-                        );
-                      },
-                      child: Container(
-                        height: 34.adaptSize,
-                        // width: 34.adaptSize,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8.adaptSize,
-                          vertical: 6.adaptSize,
-                        ),
-                        margin: EdgeInsets.only(
-                          left: 12.v,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colorPrimary,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5.adaptSize)),
-                        ),
-                        // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
-                        child: Center(
-                          child: CustomTextView(
-                            text: session.bookingMeeting?.bookASeat ??
-                                "Book A Seat",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: white,
+                          child: Container(
+                            height: 34.adaptSize,
+                            // width: 34.adaptSize,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.adaptSize,
+                              vertical: 6.adaptSize,
+                            ),
+                            margin: EdgeInsets.only(
+                              left: 12.v,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorPrimary,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5.adaptSize)),
+                            ),
+                            // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
+                            child: Center(
+                              child: CustomTextView(
+                                text: session.bookingMeeting?.bookASeat ??
+                                    "Book A Seat",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: white,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
-                  : Container(
-                      height: 34.adaptSize,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.adaptSize,
-                        vertical: 6.adaptSize,
-                      ),
-                      margin: EdgeInsets.only(
-                        left: 12.v,
-                      ),
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5.adaptSize)),
-                          border: Border.all(
-                            color: colorPrimary,
-                          )),
-                      // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
-                      child: Center(
-                        child: CustomTextView(
-                          text: session.bookingMeeting?.slotsMessage ??
-                              "Not Available",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: colorPrimary,
-                        ),
-                      ),
-                    ),
+                        )
+                      : Container(
+                          height: 34.adaptSize,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.adaptSize,
+                            vertical: 6.adaptSize,
+                          ),
+                          margin: EdgeInsets.only(
+                            left: 12.v,
+                          ),
+                          decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5.adaptSize)),
+                              border: Border.all(
+                                color: colorPrimary,
+                              )),
+                          // child: SvgPicture.asset("assets/svg/ic_play_icon.svg"),
+                          child: Center(
+                            child: CustomTextView(
+                              text: session.bookingMeeting?.slotsMessage ??
+                                  "Not Available",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: colorPrimary,
+                            ),
+                          ),
+                        )
+                  : const SizedBox(),
       ],
     );
   }

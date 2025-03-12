@@ -1891,6 +1891,7 @@ class ApiService extends GetxService {
               .post(Uri.parse(apiUrl),
                   headers: getHeaders(), body: jsonEncode(body))
               .timeout(const Duration(seconds: 30));
+      log("getSessionList ${response.body}");
       if (ScheduleModel.fromJson(json.decode(response.body)).code == 440) {
         tokenExpire();
       }

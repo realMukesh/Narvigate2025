@@ -170,78 +170,81 @@ class WatchDetailPage extends GetView<SessionController> {
                                       ),
                                     ),
                                   )
-                                : sessions.bookingMeeting?.slotsAvailable ??
-                                        false
-                                    ? CustomIconButton(
-                                        height: 56.h,
-                                        decoration: BoxDecoration(
-                                          color: colorPrimary,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        width: context.width,
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return CustomDialogWidget(
-                                                  title: "Confirmation",
-                                                  logo: '',
-                                                  description: sessions
-                                                          .bookingMeeting
-                                                          ?.confirmationMessage ??
-                                                      "Are you sure you want to book this seat?",
-                                                  buttonAction: "Yes",
-                                                  buttonCancel: "No",
-                                                  onCancelTap: () {},
-                                                  onActionTap: () async {
-                                                    controller.seatBooking(
-                                                      bookingMeeting: sessions
-                                                              .bookingMeeting ??
-                                                          BookingMeeting(),
-                                                      requestBody: {
-                                                        "webinar_id":
-                                                            sessions.id,
+                                : sessions.status?.value == 0
+                                    ? sessions.bookingMeeting?.slotsAvailable ??
+                                            false
+                                        ? CustomIconButton(
+                                            height: 56.h,
+                                            decoration: BoxDecoration(
+                                              color: colorPrimary,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            width: context.width,
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return CustomDialogWidget(
+                                                      title: "Confirmation",
+                                                      logo: '',
+                                                      description: sessions
+                                                              .bookingMeeting
+                                                              ?.confirmationMessage ??
+                                                          "Are you sure you want to book this seat?",
+                                                      buttonAction: "Yes",
+                                                      buttonCancel: "No",
+                                                      onCancelTap: () {},
+                                                      onActionTap: () async {
+                                                        controller.seatBooking(
+                                                          bookingMeeting: sessions
+                                                                  .bookingMeeting ??
+                                                              BookingMeeting(),
+                                                          requestBody: {
+                                                            "webinar_id":
+                                                                sessions.id,
+                                                          },
+                                                        );
                                                       },
                                                     );
-                                                  },
-                                                );
-                                              });
-                                        },
-                                        child: Center(
-                                          child: CustomTextView(
-                                            text: sessions.bookingMeeting
-                                                    ?.bookASeat ??
-                                                "Book A Seat",
-                                            fontSize: 16,
-                                            maxLines: 1,
-                                            fontWeight: FontWeight.w500,
-                                            color: white,
-                                          ),
-                                        ),
-                                      )
-                                    : CustomIconButton(
-                                        height: 56.h,
-                                        decoration: BoxDecoration(
-                                          // color: colorPrimary,
-                                          border:
-                                              Border.all(color: colorPrimary),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        width: context.width,
-                                        child: Center(
-                                          child: CustomTextView(
-                                            text: sessions.bookingMeeting
-                                                    ?.slotsMessage ??
-                                                "Not Available",
-                                            fontSize: 16,
-                                            maxLines: 1,
-                                            fontWeight: FontWeight.w500,
-                                            color: colorPrimary,
-                                          ),
-                                        ),
-                                      ),
+                                                  });
+                                            },
+                                            child: Center(
+                                              child: CustomTextView(
+                                                text: sessions.bookingMeeting
+                                                        ?.bookASeat ??
+                                                    "Book A Seat",
+                                                fontSize: 16,
+                                                maxLines: 1,
+                                                fontWeight: FontWeight.w500,
+                                                color: white,
+                                              ),
+                                            ),
+                                          )
+                                        : CustomIconButton(
+                                            height: 56.h,
+                                            decoration: BoxDecoration(
+                                              // color: colorPrimary,
+                                              border: Border.all(
+                                                  color: colorPrimary),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            width: context.width,
+                                            child: Center(
+                                              child: CustomTextView(
+                                                text: sessions.bookingMeeting
+                                                        ?.slotsMessage ??
+                                                    "Not Available",
+                                                fontSize: 16,
+                                                maxLines: 1,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorPrimary,
+                                              ),
+                                            ),
+                                          )
+                                    : const SizedBox(),
                           )
                         : const SizedBox(),
                     controller.mSessionDetailBody.value.isOnlineStream == 1 &&
