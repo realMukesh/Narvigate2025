@@ -93,7 +93,7 @@ class DashboardPage extends StatelessWidget {
                   color: colorSecondary,
                 ),
                 actions: [
-                  // buildChatLink(),
+                  buildChatLink(),
                   buildAlertLink(),
                   const SizedBox(
                     width: 3,

@@ -89,7 +89,7 @@ class LiveEventWidget extends GetView<HomeController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    toolbarWidget(ImageConstant.feedback_launchpad, 0),
+                                    toolbarWidget(ImageConstant.svg_chat, 0),
                                     toolbarWidget(
                                       _dashboardController.personalCount.value >
                                                   0 ||
@@ -147,7 +147,7 @@ class LiveEventWidget extends GetView<HomeController> {
                       Align(
                         alignment: Alignment.topCenter,
                         child: Container(
-                          margin: const EdgeInsets.only(top: 8),
+                          margin: const EdgeInsets.only(top: 5),
                           child: SizedBox(
                             height: 20.adaptSize,
                             child: Material(
@@ -187,8 +187,8 @@ class LiveEventWidget extends GetView<HomeController> {
           onTap: () {
             switch (index) {
               case 0:
-                // Get.toNamed(ChatDashboardPage.routeName);
-                Get.toNamed(FeedbackPage.routeName);
+                Get.toNamed(ChatDashboardPage.routeName);
+                // Get.toNamed(FeedbackPage.routeName);
                 break;
               case 1:
                 _dashboardController.openAlertPage();

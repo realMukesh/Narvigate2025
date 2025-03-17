@@ -147,7 +147,19 @@ class MyBadgePage extends GetView<QrPageController> {
                             child: CircularProgressIndicator(),
                           ),
                           errorWidget: (context, url, error) =>
-                              Image.asset("assets/icons/logo.png"),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: colorLightGray,
+                                ),
+                                child: Center(
+                                  child: CustomTextView(
+                                    text: authManager.getUsername() ?? "",
+                                    fontSize: 22,
+                                    textAlign: TextAlign.center,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
                         ),
                       ),
                       const SizedBox(width: 10.0),

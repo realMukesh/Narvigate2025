@@ -4,6 +4,8 @@ import 'package:dreamcast/view/beforeLogin/globalController/authentication_manag
 import 'package:dreamcast/view/chat/view/chatDashboard.dart';
 import 'package:dreamcast/view/eventFeed/view/feedListPage.dart';
 import 'package:dreamcast/view/meeting/controller/meetingController.dart';
+import 'package:dreamcast/view/polls/controller/pollsController.dart';
+import 'package:dreamcast/view/polls/view/pollsPage.dart';
 import 'package:dreamcast/view/profileSetup/view/edit_profile_page.dart';
 import 'package:dreamcast/view/quiz/view/feedback_page.dart';
 import 'package:dreamcast/view/schedule/controller/session_controller.dart';
@@ -152,12 +154,12 @@ class PushNotificationService {
             Get.toNamed(ProfileEditPage.routeName,arguments: "is_ai_profile");
             break;
           case "poll":
-            Get.toNamed(AlertDashboard.routeName, arguments: {"tabIndex": 0});
-            /*if (Get.isRegistered<PollController>()) {
+            // Get.toNamed(AlertDashboard.routeName, arguments: {"tabIndex": 0});
+            if (Get.isRegistered<PollController>()) {
               Get.delete<PollController>();
             }
             Get.toNamed(PollsPage.routeName,
-                arguments: {"item_type": "event", "item_id": ""});*/
+                arguments: {"item_type": "event", "item_id": ""});
             break;
           case "auditoriums":
           case "attendees":

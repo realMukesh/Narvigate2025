@@ -207,6 +207,17 @@ class HubController extends GetxController {
         );
         break;
       case "user":
+        // if (Get.isRegistered<NetworkingController>()) {
+        //   NetworkingController controller = Get.find();
+        //   controller.isLoading(false);
+        //   controller.clearFilterOnTab();
+        //   controller.initApiCall();
+        // }
+        // Get.toNamed(
+        //   NetworkingPage.routeName,
+        //   arguments: {"role": menuData.slug, "title": menuData.label},
+        // );
+
         Get.toNamed(
           SpeakerListPage.routeName,
           arguments: {"role": menuData.slug, "title": menuData.label},

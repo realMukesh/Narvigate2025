@@ -686,8 +686,12 @@ class _LoginPageState extends State<LoginPageOTP> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "powered_by".tr,
-              style: GoogleFonts.getFont(MyConstant.currentFont,
-                  color: white, fontSize: 14, fontWeight: FontWeight.normal),
+              style: GoogleFonts.getFont(
+                MyConstant.currentFont,
+                color: colorSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ),
           SvgPicture.asset(

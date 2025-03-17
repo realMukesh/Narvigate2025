@@ -280,10 +280,13 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
                       (_authManager.isMeeting() ?? false))
               ? buildMeetingButton(context)
               : const SizedBox(),
-          personalObject.isLoggedin.toString()=="1"?Skeletonizer(
-            child: blockChatButtonWidget(context, personalObject),
-            enabled: controller.commonChatMeetingController.isChatLoading.value,
-          ):const SizedBox()
+          personalObject.isLoggedin.toString() == "1"
+              ? Skeletonizer(
+                  child: blockChatButtonWidget(context, personalObject),
+                  enabled: controller
+                      .commonChatMeetingController.isChatLoading.value,
+                )
+              : const SizedBox()
         ],
       ),
     );
@@ -562,8 +565,8 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
                                     .replaceAll("<br", "")
                                     .replaceAll("/>", "") ??
                                 "",
-                            maxLines:
-                                5, // Set the maximum number of lines before truncation
+                            maxLines: 5,
+                            // Set the maximum number of lines before truncation
                             style: GoogleFonts.getFont(MyConstant.currentFont,
                                 fontSize: 16.fSize,
                                 color: colorSecondary,
@@ -739,14 +742,16 @@ class SpeakersDetailPage extends GetView<SpeakersDetailController> {
                         validator: (String? value) {
                           if (value == null ||
                               value.toString().trim().isEmpty) {
-                            Future.delayed(const Duration(milliseconds: 500), () {
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () {
                               controller.notesData(NotesDataModel(text: value));
                             });
                             return "enter_notes".tr;
                           } else if (value.length < 3) {
                             return "notes_length_validation".tr;
                           } else {
-                            Future.delayed(const Duration(milliseconds: 500), () {
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () {
                               controller.notesData(NotesDataModel(text: value));
                             });
                             return null;

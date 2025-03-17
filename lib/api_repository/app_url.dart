@@ -19,11 +19,11 @@ class AppUrl {
 
   /****************dynamic base url updated from the auth manager*****/
 
-  static String baseURLV1 =
-      'https://eappsapi.vehub.live/narvigate_2025/api/v1'; // production
-
   // static String baseURLV1 =
-  //     'https://live.dreamcast.in/narvigate_2025/api/v1';   /// staging url
+  //     'https://eappsapi.vehub.live/narvigate_2025/api/v1'; // production
+
+  static String baseURLV1 =
+      'https://live.dreamcast.in/narvigate_2025/api/v1';   /// staging url
 
 
   /* static String baseURLV1 =

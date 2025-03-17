@@ -273,7 +273,7 @@ class PreEventWidget extends GetView<HomeController> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           toolbarWidget(
-                                              ImageConstant.feedback_launchpad, 0),
+                                              ImageConstant.svg_chat, 0),
                                           SizedBox(
                                             width: 14.v,
                                           ),
@@ -364,8 +364,8 @@ class PreEventWidget extends GetView<HomeController> {
           onTap: () {
             switch (index) {
               case 0:
-                // Get.toNamed(ChatDashboardPage.routeName);
-                Get.toNamed(FeedbackPage.routeName);
+                Get.toNamed(ChatDashboardPage.routeName);
+                // Get.toNamed(FeedbackPage.routeName);
                 break;
               case 1:
                 _dashboardController.openAlertPage();

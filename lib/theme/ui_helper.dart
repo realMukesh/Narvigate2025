@@ -976,7 +976,7 @@ class UiHelper {
 
   static bool isValidFacebookUrl(String url) {
     final RegExp regex = RegExp(
-      r'^https?:\/\/(www\.)?facebook\.com\/([a-zA-Z0-9.\-_]{1,50}|profile\.php\?id=\d{5,20})\/?$',
+      r'^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$',
     );
     return regex.hasMatch(url);
   }

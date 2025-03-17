@@ -21,7 +21,7 @@ import '../splash/model/config_model.dart';
 import '../../../api_repository/api_service.dart';
 
 class AuthenticationManager extends GetxController with CacheManager {
-  var iosAppVersion = 14;
+  var iosAppVersion = 15;
   var _currAppVersion = "";
   get currAppVersion => _currAppVersion;
 
@@ -136,7 +136,7 @@ class AuthenticationManager extends GetxController with CacheManager {
         final json = event.snapshot.value as Map<dynamic, dynamic>;
         if (json["endPoint"] != null &&
             json["endPoint"].toString().isNotEmpty) {
-          AppUrl.baseURLV1 = json["endPoint"];
+          // AppUrl.baseURLV1 = json["endPoint"];
           print("AppUrl.baseURLV1 ${AppUrl.baseURLV1}");
         }
       }
