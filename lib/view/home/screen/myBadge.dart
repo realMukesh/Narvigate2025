@@ -198,7 +198,7 @@ class MyBadgePage extends GetView<QrPageController> {
                     ],
                   ),
                   SizedBox(height: 34.0.adaptSize),
-                  controller.badgeMessage.value.isNotEmpty
+                  controller.qrBadge.value.isNotEmpty
                       ? Card(
                           elevation: 5,
                           color: white,
@@ -217,7 +217,7 @@ class MyBadgePage extends GetView<QrPageController> {
                         )
                       : CustomTextView(
                           text: controller.badgeMessage.value ?? "",
-                          color: white,
+                          color: colorSecondary,
                           maxLines: 3,
                           fontSize: 14,
                           textAlign: TextAlign.center,

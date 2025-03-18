@@ -162,7 +162,7 @@ class UiHelper {
           date.toString().contains('Z')) {
         // Format with milliseconds (e.g., 2024-10-04 08:58:58.000Z)
         parseDate =
-            DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parseUtc(date.toString());
+            DateFormat("yyyy-MM-dd HH:mm:ssZ'").parseUtc(date.toString());
       } else {
         // Default fallback format
         parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
@@ -200,7 +200,7 @@ class UiHelper {
           date.toString().contains('Z')) {
         // Format with milliseconds (e.g., 2024-10-04 08:58:58.000Z)
         parseDate =
-            DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parseUtc(date.toString());
+            DateFormat("yyyy-MM-dd HH:mm:ssZ'").parseUtc(date.toString());
       } else {
         // Default fallback format
         parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
@@ -280,7 +280,7 @@ class UiHelper {
           date.toString().contains('Z')) {
         // Format with milliseconds (e.g., 2024-10-04 08:58:58.000Z)
         parseDate =
-            DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parseUtc(date.toString());
+            DateFormat("yyyy-MM-dd HH:mm:ssZ'").parseUtc(date.toString());
       } else {
         // Default fallback format
         parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
@@ -316,7 +316,7 @@ class UiHelper {
       } else if (date.toString().contains('.') && date.toString().contains('Z')) {
         // Format with milliseconds (e.g., 2024-10-04 08:58:58.000Z)
         parseDate =
-            DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parseUtc(date.toString());
+            DateFormat("yyyy-MM-dd HH:mm:ssZ'").parseUtc(date.toString());
       } else {
         // Default fallback format
         parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);
@@ -376,7 +376,7 @@ class UiHelper {
           date.toString().contains('Z')) {
         // Format with milliseconds (e.g., 2024-10-04 08:58:58.000Z)
         parseDate =
-            DateFormat("yyyy-MM-dd HH:mm:ss.SSS'Z'").parseUtc(date.toString());
+            DateFormat("yyyy-MM-dd HH:mm:ssZ'").parseUtc(date.toString());
       } else {
         // Default fallback format
         parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(date, true);

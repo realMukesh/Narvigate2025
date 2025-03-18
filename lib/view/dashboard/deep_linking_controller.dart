@@ -106,11 +106,11 @@ class DeepLinkingController extends GetxController {
         // If PollController is registered, delete it before navigating to PollsPage.
         Get.toNamed(AlertDashboard.routeName, arguments: {"tabIndex": 0});
 
-        /* if (Get.isRegistered<PollController>()) {
+        if (Get.isRegistered<PollController>()) {
           Get.delete<PollController>();
         }
         Get.toNamed(PollsPage.routeName,
-            arguments: {"item_type": "event", "item_id": ""});*/
+            arguments: {"item_type": "event", "item_id": ""});
         break;
 
       case "feeds":

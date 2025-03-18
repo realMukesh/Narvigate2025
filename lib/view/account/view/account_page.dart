@@ -265,7 +265,8 @@ class AccountPage extends GetView<AccountController> {
                             ],
                           ),
                         ),
-                      )),
+                      ),
+                  ),
                   controller.isHubLoading() ?? false
                       ? const Loading()
                       : const SizedBox()
@@ -435,7 +436,7 @@ class AccountPage extends GetView<AccountController> {
                       width: 30,
                       child: InkWell(
                           onTap: () {
-                            UiHelper.inAppWebView(
+                            UiHelper. inAppBrowserView(
                                 Uri.parse(item.value.toString()));
                           },
                           child: Container(
