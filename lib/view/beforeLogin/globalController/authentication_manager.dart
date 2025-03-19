@@ -21,7 +21,7 @@ import '../splash/model/config_model.dart';
 import '../../../api_repository/api_service.dart';
 
 class AuthenticationManager extends GetxController with CacheManager {
-  var iosAppVersion = 18;
+  var iosAppVersion = 19;
   var _currAppVersion = "";
   get currAppVersion => _currAppVersion;
 

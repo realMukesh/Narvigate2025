@@ -147,9 +147,9 @@ class ContactController extends GetxController {
   Future<void> requestPermissionAndSaveContact(
       BuildContext context, Contacts representatives) async {
     // Request permission to access contacts
-    // bool permissionGranted = await FlutterContacts.requestPermission();
-    bool? permissionGranted =
-        await UiHelper.checkAndRequestContactPermissions();
+    bool permissionGranted = await FlutterContacts.requestPermission();
+    // bool? permissionGranted =
+    //     await UiHelper.checkAndRequestContactPermissions();
 
     if (permissionGranted!) {
       // Create a new contact object

@@ -1,3 +1,4 @@
+import 'package:dreamcast/model/common_model.dart';
 import 'package:dreamcast/view/partners/model/homeSponsorsPartnersListModel.dart';
 import 'package:dreamcast/view/partners/model/AllSponsorsPartnersListModel.dart';
 import 'package:get/get.dart';
@@ -50,5 +51,25 @@ class SponsorPartnersController extends GetxController {
       allSponsorsList.addAll(model.body ?? []);
       update();
     }
+  }
+
+  ///*********** Home Sponsors Partners details Api **************///
+  Future<void> sponsorsPartnersDetailsApi(
+      {required String sponsorId, required bool isRefresh}) async {
+
+    var requestBody = {
+      "sponsor_id": sponsorId,
+    };
+    // if (isRefresh) {
+    //   sponsorsLoader(true);
+    // }
+    CommonModel? model =
+        await apiService.sponsorsPartnersDetails(requestBody);
+    // sponsorsLoader(false);
+    // if (model.status! && model.code == 200) {
+    //   allSponsorsList.clear();
+    //   allSponsorsList.addAll(model.body ?? []);
+    //   update();
+    // }
   }
 }

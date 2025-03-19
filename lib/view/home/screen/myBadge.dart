@@ -40,7 +40,8 @@ class MyBadgePage extends GetView<QrPageController> {
                           controller.qrBadge.contains(".pdf")
                       ? showPdf()
                       : showBadge(context),
-              controller.qrBadge.value.isEmpty && controller.loading.value
+              // controller.qrBadge.value.isEmpty &&
+              controller.loading.value
                   ? const Loading()
                   : const SizedBox()
             ],
@@ -302,7 +303,9 @@ class MyBadgePage extends GetView<QrPageController> {
               ),
             ),
           ),
-          controller.loading.value ? const Loading() : const SizedBox()
+          // controller.loading.value
+          //     ? const Loading()
+          //     : const SizedBox()
         ],
       ),
     );

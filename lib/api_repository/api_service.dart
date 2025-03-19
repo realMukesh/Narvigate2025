@@ -841,6 +841,8 @@ class ApiService extends GetxService {
   Future<AllSponsorsPartnerListModel> allSponsorsPartnersListApi(
       dynamic requestBody) async {
     debugPrint(requestBody.toString());
+    log("sam ${AppUrl.getPartnerList}");
+    log("sam ${requestBody}");
     try {
       final response =
           await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
@@ -853,6 +855,28 @@ class ApiService extends GetxService {
         tokenExpire();
       }
       return AllSponsorsPartnerListModel.fromJson(json.decode(response.body));
+    } catch (e) {
+      checkException(e);
+      rethrow;
+    }
+  }
+
+  Future<CommonModel> sponsorsPartnersDetails(
+      dynamic requestBody) async {
+    debugPrint(requestBody.toString());
+    // log("sam ${AppUrl.getPartnerDetails}");
+    // log("sam ${requestBody}");
+    try {
+      final response =
+          await DigestAuthClient(DIGEST_AUTH_USERNAME, DIGEST_AUTH_PASSWORD)
+              .post(Uri.parse(AppUrl.getPartnerDetails),
+                  headers: getHeaders(), body: jsonEncode(requestBody))
+              .timeout(const Duration(seconds: 30));
+      // log("sam ${response.body}");
+      if (CommonModel.fromJson(json.decode(response.body)).code == 440) {
+        tokenExpire();
+      }
+      return CommonModel.fromJson(json.decode(response.body));
     } catch (e) {
       checkException(e);
       rethrow;

@@ -173,6 +173,8 @@ class AppUrl {
 
   static String get getPartnerList => '$baseURLV1/sponsors/get';
 
+  static String get getPartnerDetails => '$baseURLV1/sponsors/getDetail';
+
   /*chat module post body{user_id:101, message:"HI"}*/
   static String get createRoom => '$baseURLV1/userChatRooms/makeRequest';
 

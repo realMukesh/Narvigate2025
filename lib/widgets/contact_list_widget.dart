@@ -89,23 +89,29 @@ class ContactListBody extends GetView<ContactController> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomTextView(
-                              text: "${representatives.position ?? ""}",
-                              fontSize: 14,
-                              maxLines: 2,
-                              fontWeight: FontWeight.normal,
-                              color: colorGray,
-                              textAlign: TextAlign.start,
+                            SizedBox(
+                              width: context.width - 200.v,
+                              child: CustomTextView(
+                                text: "${representatives.position ?? ""}",
+                                fontSize: 14,
+                                maxLines: 2,
+                                fontWeight: FontWeight.normal,
+                                color: colorGray,
+                                textAlign: TextAlign.start,
+                              ),
                             ),
                             if((representatives.company ?? "").isNotEmpty)
-                              CustomTextView(
-                              text: "${representatives.company ?? ""}",
-                              fontSize: 14,
-                              maxLines: 2,
-                              fontWeight: FontWeight.w600,
-                              color: colorGray,
-                              textAlign: TextAlign.start,
-                            ),
+                              SizedBox(
+                                width: context.width - 200.v,
+                                child: CustomTextView(
+                                text: "${representatives.company ?? ""}",
+                                fontSize: 14,
+                                maxLines: 2,
+                                fontWeight: FontWeight.w600,
+                                color: colorGray,
+                                textAlign: TextAlign.start,
+                                                            ),
+                              ),
                             if((representatives.association ?? "").isNotEmpty)
                               CustomTextView(
                               text: "${representatives.association ?? ""}",

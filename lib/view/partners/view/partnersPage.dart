@@ -150,6 +150,8 @@ class SponsorsList extends GetView<SponsorPartnersController> {
   buildCardWidget(Items data) {
     return GestureDetector(
       onTap: () {
+        controller.sponsorsPartnersDetailsApi(
+            sponsorId: data.id ?? "", isRefresh: false);
         Get.to(PartnerDetailPage(partner: data));
       },
       child: Card(

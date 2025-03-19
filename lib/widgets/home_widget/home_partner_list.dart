@@ -49,6 +49,8 @@ class HomePartnerList extends GetView<SponsorPartnersController> {
                     var data = items[index];
                     return InkWell(
                       onTap: () async {
+                        controller.sponsorsPartnersDetailsApi(
+                            sponsorId: data.id ?? "", isRefresh: false);
                         Get.to(PartnerDetailPage(partner: data));
                       },
                       child: Stack(

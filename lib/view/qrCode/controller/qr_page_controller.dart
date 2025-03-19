@@ -48,7 +48,7 @@ class QrPageController extends GetxController
     BadgeModel? model = await apiService.getBadge();
     loading(false);
     if (model.status ?? false) {
-      print("MBadge url: $qrBadge");
+      // print("MBadge url: $qrBadge");
       qrBadge(model.body?.mbadge ?? "");
       badgeMessage(model.body?.message?.body ?? "");
       controller.update();
